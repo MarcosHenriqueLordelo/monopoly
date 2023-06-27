@@ -1,5 +1,7 @@
-import registerRootComponent from 'expo/build/launch/registerRootComponent';
+import registerRootComponent from "expo/build/launch/registerRootComponent";
 
-import index from './src/index';
+import "react-native-get-random-values";
+
+import index from "./src/index";
 
 registerRootComponent(index);

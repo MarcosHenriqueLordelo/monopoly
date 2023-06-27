@@ -3,6 +3,7 @@ interface Strings {
   appIntro1: string;
   appIntro2: string;
   continue: string;
+  hello: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;

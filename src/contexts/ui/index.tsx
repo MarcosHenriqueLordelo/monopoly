@@ -14,7 +14,9 @@ interface UiContext {
   theme: Theme;
   language: string;
   loading: boolean;
+  loadingUser: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoadingUser: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UiContext = createContext<UiContext>({} as UiContext);
@@ -24,6 +26,7 @@ export const UiProvider: React.FC<DefaultProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(themeLight);
   const [language, setLanguage] = useState<string>("pt-br");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingUser, setLoadingUser] = useState<boolean>(true);
 
   useEffect(() => {
     const loadStoragedData = async () => {
@@ -52,6 +55,8 @@ export const UiProvider: React.FC<DefaultProps> = ({ children }) => {
         language,
         loading,
         setLoading,
+        loadingUser,
+        setLoadingUser,
       }}
     >
       {children}

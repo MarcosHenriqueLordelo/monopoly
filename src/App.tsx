@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar style="light" />
+      <StatusBar style="light" backgroundColor={theme.colors.action} />
       <View
         style={{
           height: insets.top,

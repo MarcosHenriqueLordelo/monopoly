@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 
-import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
 import useUi from "../../contexts/ui/useUi";
 import useUser from "../../contexts/user/useUser";
-import { StackActions, useNavigation } from "@react-navigation/native";
 
 import getStyles from "./styles";
 import TextField from "../../components/TextField";
@@ -16,7 +14,6 @@ import Spacer from "../../components/Spacer";
 const Login: React.FC = () => {
   const { user, saveUserInCache } = useUser();
   const { theme, strings } = useUi();
-  const navigation = useNavigation();
 
   const [userName, setUserName] = useState("");
   const [uid, setUid] = useState("");
