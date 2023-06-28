@@ -35,7 +35,6 @@ const Lobby: React.FC = () => {
   }, [game]);
 
   const loadLobby = async (lobby: string[]) => {
-    const ids: string[] = [];
     const dataToPush: User[] = [];
 
     const promises = lobby.map(async (id) => {
