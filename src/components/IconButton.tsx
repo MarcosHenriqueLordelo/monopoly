@@ -10,6 +10,7 @@ interface PropTypes {
   containerSize?: number;
   onPress: () => void;
   style?: ViewStyle;
+  color?: string;
 }
 
 const IconButton: React.FC<PropTypes> = ({
@@ -18,6 +19,7 @@ const IconButton: React.FC<PropTypes> = ({
   onPress,
   size,
   style,
+  color,
 }) => {
   const { theme } = useUi();
 
@@ -32,7 +34,11 @@ const IconButton: React.FC<PropTypes> = ({
         ...style,
       }}
     >
-      <MaterialIcon name={name} size={size} color={theme.colors.fontLight} />
+      <MaterialIcon
+        name={name}
+        size={size}
+        color={color || theme.colors.fontLight}
+      />
     </TouchableOpacity>
   );
 };

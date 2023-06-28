@@ -29,7 +29,6 @@ export const UserProvider: React.FC<DefaultProps> = ({ children }) => {
       const userUid = await AsyncStorage.getItem(`${TOKEN_KEY}:uid`);
 
       if (username !== null && userUid !== null) {
-        console.log({ username, userUid });
         setUser({ id: userUid, name: username });
       }
     } catch {

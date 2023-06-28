@@ -7,16 +7,23 @@ import getStyles from "./styles";
 interface PropTypes {
   label: string;
   onPress: () => void;
+  disabled?: boolean;
 }
 
-const Button: React.FC<PropTypes> = ({ label, onPress }) => {
+const Button: React.FC<PropTypes> = ({ label, onPress, disabled }) => {
   const { theme } = useUi();
 
   const styles = getStyles(theme);
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text style={styles.label}>{label}</Text>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      <Text style={{ ...styles.label, opacity: disabled ? 0.5 : 1 }}>
+        {label}
+      </Text>
     </TouchableOpacity>
   );
 };

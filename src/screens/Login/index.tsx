@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-
-import { v4 as uuidv4 } from "uuid";
+import * as Crypto from "expo-crypto";
 
 import useUi from "../../contexts/ui/useUi";
 import useUser from "../../contexts/user/useUser";
+import useFirebase from "../../contexts/firebase/useFirebase";
 
 import getStyles from "./styles";
 import TextField from "../../components/TextField";
@@ -14,6 +14,7 @@ import Spacer from "../../components/Spacer";
 const Login: React.FC = () => {
   const { user, saveUserInCache } = useUser();
   const { theme, strings } = useUi();
+  const { saveUser } = useFirebase();
 
   const [userName, setUserName] = useState("");
   const [uid, setUid] = useState("");
@@ -25,7 +26,7 @@ const Login: React.FC = () => {
       setUserName(user.name);
       setUid(user.id);
     } else {
-      const uid = uuidv4();
+      const uid = Crypto.randomUUID();
       const name = `user-${uid.substring(0, 3)}`;
 
       setUserName(name);
@@ -49,6 +50,7 @@ const Login: React.FC = () => {
     if (handleError()) return;
 
     saveUserInCache(userName, uid);
+    saveUser(userName, uid);
   };
 
   return (

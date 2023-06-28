@@ -10,7 +10,7 @@ interface PropTypes {
 }
 
 const SnackBar: React.FC<PropTypes> = ({ position }) => {
-  const { message, color } = useSnackbar();
+  const { message, color, clearMessage } = useSnackbar();
 
   const [styles, setStyles] = useState(getStyles(color));
 
@@ -47,6 +47,7 @@ const SnackBar: React.FC<PropTypes> = ({ position }) => {
       toValue: 0,
       useNativeDriver: false,
     }).start();
+    clearMessage();
   };
 
   return (

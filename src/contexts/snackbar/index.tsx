@@ -4,6 +4,7 @@ interface SnackbarContext {
   showSnackbar: (message: string, color: string) => void;
   message?: string;
   color?: string;
+  clearMessage: () => void;
 }
 
 const SnackbarContext = createContext<SnackbarContext>({} as SnackbarContext);
@@ -17,12 +18,15 @@ export const SnackbarProvider: React.FC<DefaultProps> = ({ children }) => {
     setColor(color);
   };
 
+  const clearMessage = () => setMessage(undefined);
+
   return (
     <SnackbarContext.Provider
       value={{
         showSnackbar,
         message,
         color,
+        clearMessage,
       }}
     >
       {children}

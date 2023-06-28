@@ -6,11 +6,10 @@ import screenOpts from "../utils/defaultScreenOpts";
 import useUser from "../contexts/user/useUser";
 import useUi from "../contexts/ui/useUi";
 
-import MainMenu from "../screens/MainMenu";
-import Login from "../screens/Login";
-import Game from "../screens/Game";
-
 import Loading from "../components/Loading";
+
+import MainNav from "./MainNav";
+import LoginNav from "./LoginNav";
 
 const RootStack = createStackNavigator();
 
@@ -23,9 +22,9 @@ const RootNav: React.FC = () => {
   return (
     <RootStack.Navigator screenOptions={screenOpts}>
       {user ? (
-        <RootStack.Screen name="MainNav" component={MainMenu} />
+        <RootStack.Screen name="MainNav" component={MainNav} />
       ) : (
-        <RootStack.Screen name="LoginNav" component={Login} />
+        <RootStack.Screen name="LoginNav" component={LoginNav} />
       )}
     </RootStack.Navigator>
   );
