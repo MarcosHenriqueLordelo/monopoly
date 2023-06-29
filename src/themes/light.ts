@@ -7,6 +7,7 @@ const light: Theme = {
     fontLight: "#FFFFFF",
     action: "#E86F68",
     error: "#C70000",
+    success: "#4BB543",
   },
   font: {
     body: {

@@ -7,6 +7,7 @@ interface Theme {
     fontLight: string;
     action: string;
     error: string;
+    success: string;
   };
   font: {
     label: Font;

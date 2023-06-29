@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import useUi from "../../contexts/ui/useUi";
+import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+
 import getStyles from "./styles";
+
 import Header from "../../components/Header";
-import useFirebase from "../../contexts/firebase/useFirebase";
-import Loading from "../../components/Loading";
-import useUser from "../../contexts/user/useUser";
 import IconButton from "../../components/IconButton";
 import Spacer from "../../components/Spacer";
-import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+
+import useFirebase from "../../contexts/firebase/useFirebase";
+import useUser from "../../contexts/user/useUser";
+import Loading from "../../components/Loading";
+import useUi from "../../contexts/ui/useUi";
+import useSnackbar from "../../contexts/snackbar/useSnackbar";
+
+import DepositModal from "../../modals/DepositModal";
+import TransferModal from "../../modals/TransferModal";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
   const { game } = useFirebase();
   const { user } = useUser();
+  const { showSnackbar } = useSnackbar();
 
   const [player, setPlayer] = useState<Player>();
+  const [depositModal, setDepositModal] = useState(false);
+  const [transferModal, setTransferModal] = useState(false);
+  const [transactions, setTransactions] = useState<Transactions>({});
 
   const styles = getStyles(theme);
 
@@ -26,6 +37,52 @@ const Game: React.FC = () => {
       setPlayer(game.players[user.id]);
     }
   }, [game!.players[user!.id], user]);
+
+  useEffect(() => {
+    if (!game || !user) return;
+
+    updateTransactions(game.transactions);
+  }, [game!.transactions, user]);
+
+  const updateTransactions = useCallback(
+    (newTransactions: Transactions) => {
+      const keys = Object.keys(newTransactions);
+      const aux = transactions;
+      const auxKeys = Object.keys(aux);
+
+      const format = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format;
+
+      keys.forEach((key) => {
+        const transaction = newTransactions[key];
+
+        if (!auxKeys.includes(key)) {
+          if (transaction.payer === user!.id) {
+            aux[key] = transaction;
+          } else if (transaction.receiver === user!.id) {
+            aux[key] = transaction;
+            auxKeys.push(key);
+
+            if (Date.now() - transaction.timestamp < 60000)
+              showSnackbar(
+                `${strings.transferReceived} ${format(transaction.value)}`,
+                theme.colors.success
+              );
+          }
+        }
+      });
+
+      setTransactions(aux);
+    },
+    [transactions, user]
+  );
+
+  const formater = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   return (
     <View style={styles.container}>
@@ -39,7 +96,9 @@ const Game: React.FC = () => {
             showsVerticalScrollIndicator={false}
           >
             <Text style={styles.title}>{strings.balance}</Text>
-            <Text style={styles.ballanceValue}>R$ {player.money}</Text>
+            <Text style={styles.ballanceValue}>
+              {formater.format(player.money)}
+            </Text>
             <ScrollView
               style={styles.buttonsView}
               horizontal
@@ -48,7 +107,7 @@ const Game: React.FC = () => {
               <View style={styles.buttonItem}>
                 <IconButton
                   name="north"
-                  onPress={() => console.log("settings pressed")}
+                  onPress={() => setTransferModal(true)}
                   size={32}
                   color={theme.colors.fontDark}
                   containerSize={70}
@@ -59,7 +118,7 @@ const Game: React.FC = () => {
               <View style={styles.buttonItem}>
                 <IconButton
                   name="south"
-                  onPress={() => console.log("settings pressed")}
+                  onPress={() => setDepositModal(true)}
                   size={32}
                   color={theme.colors.fontDark}
                   containerSize={70}
@@ -124,6 +183,14 @@ const Game: React.FC = () => {
           </ScrollView>
         </View>
       )}
+      <DepositModal
+        open={depositModal}
+        onClose={() => setDepositModal(false)}
+      />
+      <TransferModal
+        open={transferModal}
+        onClose={() => setTransferModal(false)}
+      />
     </View>
   );
 };

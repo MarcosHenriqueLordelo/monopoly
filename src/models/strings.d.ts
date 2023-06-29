@@ -18,6 +18,15 @@ interface Strings {
   history: string;
   scoreboard: string;
   myProperties: string;
+  makeDeposit: string;
+  cancel: string;
+  confirm: string;
+  digitValue: string;
+  depositSuccess: string;
+  bank: string;
+  makeTransfer: string;
+  transferReceived: string;
+  transferSuccess: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;
@@ -28,4 +37,5 @@ interface Strings {
   failedToStartGame: string;
   failedToTransferMoney: string;
   insuficientBalance: string;
+  valueCantBeZero: string;
 }

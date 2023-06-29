@@ -20,6 +20,15 @@ const pt_br: Strings = {
   history: "Histórico",
   scoreboard: "Placar",
   myProperties: "Minhas Propriedades",
+  cancel: "Cancelar",
+  confirm: "Confirmar",
+  depositSuccess: "Deposito realizado com sucesso",
+  digitValue: "Digite o valor",
+  makeDeposit: "Realizar Depósito",
+  bank: "Banco",
+  makeTransfer: "Realizar Transferência",
+  transferSuccess: "Trasnferência realizada com successo",
+  transferReceived: "Transferência recebida no valor de: ",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",
@@ -29,8 +38,9 @@ const pt_br: Strings = {
   failedToRetriveUserData: "Falha ao recuperar dados do usuário",
   gameIsFull: "O jogo já chegou ao seu limite de jogadores",
   failedToStartGame: "Falha ao iniciar jogo",
-  failedToTransferMoney: "Falha ao realizar transferência",
+  failedToTransferMoney: "Falha ao realizar transação",
   insuficientBalance: "Saldo insuficiente",
+  valueCantBeZero: "Valor não pode ser zero",
 };
 
 export default pt_br;

@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState, useCallback } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Crypto from "expo-crypto";
 
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
@@ -22,6 +23,8 @@ import useUser from "../user/useUser";
 import useSnackbar from "../snackbar/useSnackbar";
 import useUi from "../ui/useUi";
 
+import { TOKEN_KEY } from "../../utils/keys";
+
 interface FirebaseContext {
   game?: Game;
   createGame: () => void;
@@ -36,6 +39,7 @@ interface FirebaseContext {
     receiver: string | "bank",
     value: number
   ) => void;
+  gameKey?: string;
 }
 
 const FirebaseContext = createContext<FirebaseContext>({} as FirebaseContext);
@@ -49,6 +53,23 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
   const [db, setDb] = useState<Database>();
   const [listener, setListener] = useState<Query>();
   const [game, setGame] = useState<Game>();
+  const [gameKey, setGameKey] = useState<string>();
+
+  useEffect(() => {
+    const getGameKeyFromCache = async () => {
+      const key = await AsyncStorage.getItem(`${TOKEN_KEY}:gameId`);
+
+      if (key !== null) setGameKey(key);
+    };
+    getGameKeyFromCache();
+  }, []);
+
+  useEffect(() => {
+    if (game && gameKey !== game.id) {
+      saveGameKeyInCache(game.id);
+      setGameKey(game.id);
+    }
+  }, [game]);
 
   useEffect(() => {
     if (getApps().length < 1) {
@@ -126,6 +147,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
   const stopListening = useCallback(() => {
     if (!listener) return;
     off(listener);
+    setGame(undefined);
   }, [listener]);
 
   const saveUser = useCallback(
@@ -141,7 +163,9 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         };
 
         await set(userRef, user);
-      } catch {}
+      } catch {
+        showSnackbar(strings.failedToRetriveUserData, theme.colors.error);
+      }
     },
     [db]
   );
@@ -241,7 +265,9 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
       try {
         if (!db || !game) return;
 
-        if (game.players[payer].money - value < 0)
+        setLoading(true);
+
+        if (payer !== "bank" && game.players[payer].money - value < 0)
           throw new Error(strings.insuficientBalance);
 
         const transactionUid = Crypto.randomUUID();
@@ -266,15 +292,26 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
           update(receiverRef, { money: game.players[receiver].money + value });
 
         await set(transactionRef, newTransaction);
+
+        if (payer === "bank")
+          showSnackbar(strings.depositSuccess, theme.colors.success);
+        if (payer !== "bank")
+          showSnackbar(strings.transferSuccess, theme.colors.success);
       } catch (err: any) {
         showSnackbar(
           err.mensage || strings.failedToTransferMoney,
           theme.colors.error
         );
+      } finally {
+        setLoading(false);
       }
     },
     [game, db]
   );
+
+  const saveGameKeyInCache = async (gameId: string) => {
+    await AsyncStorage.setItem(`${TOKEN_KEY}:gameId`, gameId);
+  };
 
   return (
     <FirebaseContext.Provider
@@ -288,6 +325,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         clearGame,
         startGame,
         makeTransaction,
+        gameKey,
       }}
     >
       {children}

@@ -15,7 +15,7 @@ import QrCodeScanner from "../../components/QrCodeScanner";
 
 const MainMenu: React.FC = () => {
   const { theme } = useUi();
-  const { createGame, listenToGame } = useFirebase();
+  const { createGame, listenToGame, gameKey } = useFirebase();
   const navigation = useNavigation();
 
   const [barCodePermisison, setBarCodePermission] = useState(false);
@@ -63,6 +63,12 @@ const MainMenu: React.FC = () => {
         <Button label="Criar Partida" onPress={handleCreateGame} />
         <Spacer height={16} />
         <Button label="Entrar em partida" onPress={handleOpenScanner} />
+        <Spacer height={16} />
+        <Button
+          disabled={gameKey === undefined}
+          label="Continuar última partida"
+          onPress={() => handleQrCodeScanned(gameKey!)}
+        />
       </View>
     </View>
   );
