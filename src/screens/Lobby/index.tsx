@@ -15,7 +15,8 @@ import Button from "../../components/Button";
 import Spacer from "../../components/Spacer";
 
 const Lobby: React.FC = () => {
-  const { game, getPlayerData, leaveLobby, clearGame } = useFirebase();
+  const { game, getPlayerData, leaveLobby, clearGame, startGame } =
+    useFirebase();
   const { loading, theme, strings } = useUi();
   const { user } = useUser();
   const navigation = useNavigation();
@@ -23,10 +24,6 @@ const Lobby: React.FC = () => {
   const styles = getStyles(theme);
 
   const [lobbyData, setLobbyData] = useState<User[]>([]);
-
-  useEffect(() => {
-    if (!loading && !game) navigation.dispatch(StackActions.pop());
-  }, [loading, game]);
 
   useEffect(() => {
     if (!game) return;
@@ -85,9 +82,13 @@ const Lobby: React.FC = () => {
   const onLeaveLobby = () => {
     leaveLobby();
     clearGame();
+    navigation.dispatch(StackActions.pop());
   };
 
-  const onStartGame = useCallback(() => {}, [game]);
+  const onStartGame = useCallback(() => {
+    if (!lobbyData) return;
+    startGame(lobbyData);
+  }, [lobbyData]);
 
   if (loading) return <Loading />;
 

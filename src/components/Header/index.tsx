@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { View, Text } from "react-native";
 
 import useUi from "../../contexts/ui/useUi";
@@ -31,7 +31,7 @@ const Header: React.FC<PropTypes> = ({ onSettingsPress }) => {
       </View>
       <Text style={styles.userName}>
         {strings.hello}
-        {user!.name}!
+        {user?.name}!
       </Text>
     </View>
   );

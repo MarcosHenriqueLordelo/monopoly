@@ -30,6 +30,12 @@ interface FirebaseContext {
   leaveLobby: () => void;
   listenToGame: (gameId: string) => void;
   clearGame: () => void;
+  startGame: (lobbyData: User[]) => void;
+  makeTransaction: (
+    payer: string | "bank",
+    receiver: string | "bank",
+    value: number
+  ) => void;
 }
 
 const FirebaseContext = createContext<FirebaseContext>({} as FirebaseContext);
@@ -68,7 +74,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         state: "lobby",
         id: gameId,
         lobby: [user.id],
-        transactions: [],
+        transactions: {},
         admin: user.id,
         players: {},
       };
@@ -188,6 +194,88 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
 
   const clearGame = () => setGame(undefined);
 
+  const startGame = useCallback(
+    (lobbyData: User[]) => {
+      try {
+        setLoading(true);
+        if (!game || !db || !user) return;
+        if (user.id !== game.admin) return;
+        if (game.lobby.length < 2) return;
+
+        const gameRef = ref(db, `Games/${game.id}`);
+
+        const players: Players = {};
+        const transactions: Transactions = {};
+
+        lobbyData.forEach((playerData) => {
+          players[playerData.id] = {
+            ...playerData,
+            money: 15000000,
+            properties: [],
+            color: theme.colors.action,
+          };
+
+          transactions[Crypto.randomUUID()] = {
+            payer: "bank",
+            receiver: playerData.id,
+            value: 15000000,
+            timestamp: Date.now(),
+          };
+        });
+
+        update(gameRef, { players, transactions, state: "in Game" });
+      } catch (err) {
+        setLoading(false);
+        showSnackbar(strings.failedToStartGame, theme.colors.error);
+      }
+    },
+    [game, db, user]
+  );
+
+  const makeTransaction = useCallback(
+    async (
+      payer: string | "bank",
+      receiver: string | "bank",
+      value: number
+    ) => {
+      try {
+        if (!db || !game) return;
+
+        if (game.players[payer].money - value < 0)
+          throw new Error(strings.insuficientBalance);
+
+        const transactionUid = Crypto.randomUUID();
+
+        const newTransaction: Transaction = {
+          payer,
+          receiver,
+          value,
+          timestamp: Date.now(),
+        };
+
+        const transactionRef = ref(
+          db,
+          `Games/${game.id}/transactions/${transactionUid}`
+        );
+        const payerRef = ref(db, `Games/${game.id}/players/${payer}`);
+        const receiverRef = ref(db, `Games/${game.id}/players/${receiver}`);
+
+        if (payer !== "bank")
+          update(payerRef, { money: game.players[payer].money - value });
+        if (receiver !== "bank")
+          update(receiverRef, { money: game.players[receiver].money + value });
+
+        await set(transactionRef, newTransaction);
+      } catch (err: any) {
+        showSnackbar(
+          err.mensage || strings.failedToTransferMoney,
+          theme.colors.error
+        );
+      }
+    },
+    [game, db]
+  );
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -198,6 +286,8 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         leaveLobby,
         listenToGame,
         clearGame,
+        startGame,
+        makeTransaction,
       }}
     >
       {children}

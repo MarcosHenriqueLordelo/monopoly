@@ -10,6 +10,14 @@ interface Strings {
   leaveLobby: string;
   startGame: string;
   qrCodeHint: string;
+  balance: string;
+  transfer: string;
+  pay: string;
+  deposit: string;
+  charge: string;
+  history: string;
+  scoreboard: string;
+  myProperties: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;
@@ -17,4 +25,7 @@ interface Strings {
   failedToRetriveGameData: string;
   failedToRetriveUserData: string;
   gameIsFull: string;
+  failedToStartGame: string;
+  failedToTransferMoney: string;
+  insuficientBalance: string;
 }

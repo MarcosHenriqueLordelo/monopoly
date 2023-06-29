@@ -33,7 +33,7 @@ const MainMenu: React.FC = () => {
 
   const handleCreateGame = () => {
     createGame();
-    navigation.dispatch(StackActions.push("Lobby"));
+    navigation.dispatch(StackActions.push("Game"));
   };
 
   const handleOpenScanner = () => {
@@ -42,7 +42,7 @@ const MainMenu: React.FC = () => {
 
   const handleQrCodeScanned = (code: string) => {
     listenToGame(code);
-    navigation.dispatch(StackActions.push("Lobby"));
+    navigation.dispatch(StackActions.push("Game"));
   };
 
   if (scanner)
