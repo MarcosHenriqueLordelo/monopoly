@@ -15,7 +15,7 @@ import Button from "../../components/Button";
 import Spacer from "../../components/Spacer";
 
 const Lobby: React.FC = () => {
-  const { game, getPlayerData, leaveLobby, clearGame, startGame } =
+  const { game, getPlayerData, leaveLobby, clearGame, startGame, gameKey } =
     useFirebase();
   const { loading, theme, strings } = useUi();
   const { user } = useUser();
@@ -92,12 +92,25 @@ const Lobby: React.FC = () => {
 
   if (loading) return <Loading />;
 
+  if (!loading && !gameKey)
+    return (
+      <View style={{ ...styles.container, justifyContent: "center" }}>
+        <Text style={styles.qrCodeHint}>{strings.opsGameNotFound}</Text>
+        <View style={styles.buttonsView}>
+          <Button
+            label={strings.goBack}
+            onPress={() => navigation.dispatch(StackActions.pop())}
+          />
+        </View>
+      </View>
+    );
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.lobbytitle}>{strings.lobby}</Text>
       <View style={styles.buttonsView}>
         <QRCode
-          value={`${strings.appName}:${game?.id}`}
+          value={`monopolyapp:gameid:${game?.id}`}
           size={175}
           backgroundColor={theme.colors.background}
           color={theme.colors.action}

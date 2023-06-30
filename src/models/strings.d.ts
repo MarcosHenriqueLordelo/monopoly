@@ -27,6 +27,12 @@ interface Strings {
   makeTransfer: string;
   transferReceived: string;
   transferSuccess: string;
+  wantsToReceive: string;
+  gameNotFound: string;
+  goBack: string;
+  opsGameNotFound: string;
+  close: string;
+  extract: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;
@@ -38,4 +44,5 @@ interface Strings {
   failedToTransferMoney: string;
   insuficientBalance: string;
   valueCantBeZero: string;
+  invalidQrCode: string;
 }

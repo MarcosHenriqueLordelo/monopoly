@@ -14,3 +14,8 @@ type Transactions = {
 type Players = {
   [key: string]: Player;
 };
+
+interface ChargeQrCode {
+  value: number;
+  receiver: User;
+}

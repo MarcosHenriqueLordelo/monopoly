@@ -20,9 +20,9 @@ const QrCodeScanner: React.FC<PropTypes> = ({ onQrCodeScanned, onClose }) => {
   const styles = getStyles(theme);
 
   const handleBarCodeScanned: BarCodeScannedCallback = ({ data, type }) => {
-    if (data.includes(strings.appName)) {
+    if (data.includes("monopolyapp")) {
       setScanned(true);
-      onQrCodeScanned(data.split(":")[1]);
+      onQrCodeScanned(data);
       onClose();
     }
   };

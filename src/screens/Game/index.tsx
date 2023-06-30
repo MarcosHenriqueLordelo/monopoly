@@ -7,6 +7,7 @@ import getStyles from "./styles";
 import Header from "../../components/Header";
 import IconButton from "../../components/IconButton";
 import Spacer from "../../components/Spacer";
+import QrCodeScanner from "../../components/QrCodeScanner";
 
 import useFirebase from "../../contexts/firebase/useFirebase";
 import useUser from "../../contexts/user/useUser";
@@ -16,6 +17,9 @@ import useSnackbar from "../../contexts/snackbar/useSnackbar";
 
 import DepositModal from "../../modals/DepositModal";
 import TransferModal from "../../modals/TransferModal";
+import ChargeModal from "../../modals/ChargeModal ";
+import QrCodeModal from "../../modals/QrCodeModal";
+import PaymentModal from "../../modals/PaymentModal";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
@@ -24,9 +28,15 @@ const Game: React.FC = () => {
   const { showSnackbar } = useSnackbar();
 
   const [player, setPlayer] = useState<Player>();
+  const [transactions, setTransactions] = useState<Transactions>({});
+  const [qrCodeData, setQrCodeData] = useState<ChargeQrCode>();
+
   const [depositModal, setDepositModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
-  const [transactions, setTransactions] = useState<Transactions>({});
+  const [chargeModal, setChargeModal] = useState(false);
+  const [qrCodeModal, setQrCodeModal] = useState(false);
+  const [paymentModal, setPaymentModal] = useState(false);
+  const [scanner, setScanner] = useState(false);
 
   const styles = getStyles(theme);
 
@@ -84,6 +94,26 @@ const Game: React.FC = () => {
     currency: "BRL",
   });
 
+  const handleQrCodeScanned = (code: string) => {
+    if (code.includes("monopolyapp") && code.includes("charge")) {
+      setQrCodeData({
+        receiver: { id: code.split(":")[2], name: code.split(":")[3] },
+        value: parseFloat(code.split(":")[4]),
+      });
+      setPaymentModal(true);
+    } else {
+      showSnackbar(strings.invalidQrCode, theme.colors.error);
+    }
+  };
+
+  if (scanner)
+    return (
+      <QrCodeScanner
+        onClose={() => setScanner(false)}
+        onQrCodeScanned={handleQrCodeScanned}
+      />
+    );
+
   return (
     <View style={styles.container}>
       {!player ? (
@@ -129,7 +159,7 @@ const Game: React.FC = () => {
               <View style={styles.buttonItem}>
                 <IconButton
                   name="qr-code-scanner"
-                  onPress={() => console.log("settings pressed")}
+                  onPress={() => setScanner(true)}
                   size={32}
                   color={theme.colors.fontDark}
                   containerSize={70}
@@ -140,7 +170,7 @@ const Game: React.FC = () => {
               <View style={styles.buttonItem}>
                 <IconButton
                   name="attach-money"
-                  onPress={() => console.log("settings pressed")}
+                  onPress={() => setChargeModal(true)}
                   size={32}
                   color={theme.colors.fontDark}
                   containerSize={70}
@@ -190,6 +220,24 @@ const Game: React.FC = () => {
       <TransferModal
         open={transferModal}
         onClose={() => setTransferModal(false)}
+      />
+      <ChargeModal
+        open={chargeModal}
+        onClose={() => setChargeModal(false)}
+        onCharge={(value, receiver) => {
+          setQrCodeData({ value, receiver });
+          setQrCodeModal(true);
+        }}
+      />
+      <QrCodeModal
+        open={qrCodeModal}
+        onClose={() => setQrCodeModal(false)}
+        qrCodeData={qrCodeData}
+      />
+      <PaymentModal
+        open={paymentModal}
+        onClose={() => setPaymentModal(false)}
+        qrCodeData={qrCodeData}
       />
     </View>
   );

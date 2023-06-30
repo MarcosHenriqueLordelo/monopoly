@@ -59,7 +59,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
     const getGameKeyFromCache = async () => {
       const key = await AsyncStorage.getItem(`${TOKEN_KEY}:gameId`);
 
-      if (key !== null) setGameKey(key);
+      if (key !== null && key !== "null") setGameKey(key);
     };
     getGameKeyFromCache();
   }, []);
@@ -135,6 +135,12 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
               stopListening();
               showSnackbar(strings.gameIsFull, theme.colors.error);
             }
+          } else {
+            setLoading(false);
+            stopListening();
+            saveGameKeyInCache();
+            setGameKey(undefined);
+            showSnackbar(strings.gameNotFound, theme.colors.error);
           }
         });
       } catch {
@@ -309,8 +315,8 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
     [game, db]
   );
 
-  const saveGameKeyInCache = async (gameId: string) => {
-    await AsyncStorage.setItem(`${TOKEN_KEY}:gameId`, gameId);
+  const saveGameKeyInCache = async (gameId?: string) => {
+    await AsyncStorage.setItem(`${TOKEN_KEY}:gameId`, gameId || "null");
   };
 
   return (

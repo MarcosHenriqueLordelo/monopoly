@@ -29,6 +29,13 @@ const pt_br: Strings = {
   makeTransfer: "Realizar Transferência",
   transferSuccess: "Trasnferência realizada com successo",
   transferReceived: "Transferência recebida no valor de: ",
+  wantsToReceive: "deseja receber",
+  gameNotFound: "Jogo não encontrado em nossa base de dados",
+  goBack: "Voltar",
+  opsGameNotFound:
+    "Ops... parece que não consiguimos encontrar o jogo que procura em nosso banco de dados",
+  close: "Fechar",
+  extract: "Extrato",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",
@@ -41,6 +48,7 @@ const pt_br: Strings = {
   failedToTransferMoney: "Falha ao realizar transação",
   insuficientBalance: "Saldo insuficiente",
   valueCantBeZero: "Valor não pode ser zero",
+  invalidQrCode: "Código escaneado não é válido",
 };
 
 export default pt_br;

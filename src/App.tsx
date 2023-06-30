@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <NavigationContainer>
+    <View style={{ flex: 1 }}>
       <StatusBar style="light" backgroundColor={theme.colors.action} />
       <View
         style={{
@@ -33,7 +33,7 @@ const App: React.FC = () => {
         }}
       />
       <SnackBar position="bottom" />
-    </NavigationContainer>
+    </View>
   );
 };
 

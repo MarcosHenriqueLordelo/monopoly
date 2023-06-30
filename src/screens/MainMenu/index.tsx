@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import useUi from "../../contexts/ui/useUi";
 import useFirebase from "../../contexts/firebase/useFirebase";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import useSnackbar from "../../contexts/snackbar/useSnackbar";
 
 import getStyles from "./styles";
 
@@ -14,8 +15,9 @@ import Spacer from "../../components/Spacer";
 import QrCodeScanner from "../../components/QrCodeScanner";
 
 const MainMenu: React.FC = () => {
-  const { theme } = useUi();
+  const { theme, strings } = useUi();
   const { createGame, listenToGame, gameKey } = useFirebase();
+  const { showSnackbar } = useSnackbar();
   const navigation = useNavigation();
 
   const [barCodePermisison, setBarCodePermission] = useState(false);
@@ -41,8 +43,12 @@ const MainMenu: React.FC = () => {
   };
 
   const handleQrCodeScanned = (code: string) => {
-    listenToGame(code);
-    navigation.dispatch(StackActions.push("Game"));
+    if (code.includes("gameid")) {
+      listenToGame(code.split(":")[2]);
+      navigation.dispatch(StackActions.push("Game"));
+    } else {
+      showSnackbar(strings.invalidQrCode, theme.colors.error);
+    }
   };
 
   if (scanner)
@@ -67,7 +73,7 @@ const MainMenu: React.FC = () => {
         <Button
           disabled={gameKey === undefined}
           label="Continuar última partida"
-          onPress={() => handleQrCodeScanned(gameKey!)}
+          onPress={() => handleQrCodeScanned(`monopolyapp:gameid:${gameKey!}`)}
         />
       </View>
     </View>
