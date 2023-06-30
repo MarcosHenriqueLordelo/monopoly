@@ -24,6 +24,7 @@ import useSnackbar from "../snackbar/useSnackbar";
 import useUi from "../ui/useUi";
 
 import { TOKEN_KEY } from "../../utils/keys";
+import moment from "moment";
 
 interface FirebaseContext {
   game?: Game;
@@ -249,7 +250,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
             payer: "bank",
             receiver: playerData.id,
             value: 15000000,
-            timestamp: Date.now(),
+            timestamp: moment().unix(),
           };
         });
 
@@ -282,7 +283,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
           payer,
           receiver,
           value,
-          timestamp: Date.now(),
+          timestamp: moment().unix(),
         };
 
         const transactionRef = ref(

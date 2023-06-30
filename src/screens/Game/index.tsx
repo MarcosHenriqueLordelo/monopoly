@@ -20,6 +20,8 @@ import TransferModal from "../../modals/TransferModal";
 import ChargeModal from "../../modals/ChargeModal ";
 import QrCodeModal from "../../modals/QrCodeModal";
 import PaymentModal from "../../modals/PaymentModal";
+import ExtractModal from "../../modals/ExtractModal";
+import moment from "moment";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
@@ -29,6 +31,7 @@ const Game: React.FC = () => {
 
   const [player, setPlayer] = useState<Player>();
   const [transactions, setTransactions] = useState<Transactions>({});
+  const [extract, setExtract] = useState<Transaction[]>([]);
   const [qrCodeData, setQrCodeData] = useState<ChargeQrCode>();
 
   const [depositModal, setDepositModal] = useState(false);
@@ -36,6 +39,7 @@ const Game: React.FC = () => {
   const [chargeModal, setChargeModal] = useState(false);
   const [qrCodeModal, setQrCodeModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
+  const [extractModal, setExtractModal] = useState(false);
   const [scanner, setScanner] = useState(false);
 
   const styles = getStyles(theme);
@@ -51,43 +55,45 @@ const Game: React.FC = () => {
   useEffect(() => {
     if (!game || !user) return;
 
-    updateTransactions(game.transactions);
-  }, [game!.transactions, user]);
+    if (game.transactions === transactions) return;
 
-  const updateTransactions = useCallback(
-    (newTransactions: Transactions) => {
-      const keys = Object.keys(newTransactions);
-      const aux = transactions;
-      const auxKeys = Object.keys(aux);
+    const keys = Object.keys(game.transactions);
+    const aux = transactions;
+    const auxKeys = Object.keys(aux);
 
-      const format = new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format;
+    const format = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format;
 
-      keys.forEach((key) => {
-        const transaction = newTransactions[key];
+    keys.forEach((key) => {
+      const transaction = game.transactions[key];
 
-        if (!auxKeys.includes(key)) {
-          if (transaction.payer === user!.id) {
-            aux[key] = transaction;
-          } else if (transaction.receiver === user!.id) {
-            aux[key] = transaction;
-            auxKeys.push(key);
-
-            if (Date.now() - transaction.timestamp < 60000)
-              showSnackbar(
-                `${strings.transferReceived} ${format(transaction.value)}`,
-                theme.colors.success
-              );
-          }
+      if (!auxKeys.includes(key)) {
+        aux[key] = transaction;
+        if (transaction.receiver === user!.id) {
+          auxKeys.push(key);
+          if (moment().unix() - transaction.timestamp < 60000)
+            showSnackbar(
+              `${strings.transferReceived} ${format(transaction.value)}`,
+              theme.colors.success
+            );
         }
-      });
+      }
+    });
 
-      setTransactions(aux);
-    },
-    [transactions, user]
-  );
+    setTransactions(aux);
+
+    const extractAux: Transaction[] = [];
+
+    keys.forEach((key) => {
+      extractAux.push(transactions[key]);
+    });
+
+    extractAux.sort((a, b) => b.timestamp - a.timestamp);
+
+    setExtract(extractAux);
+  }, [game, user]);
 
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -181,7 +187,7 @@ const Game: React.FC = () => {
               <View style={styles.buttonItem}>
                 <IconButton
                   name="history"
-                  onPress={() => console.log("settings pressed")}
+                  onPress={() => setExtractModal(true)}
                   size={32}
                   color={theme.colors.fontDark}
                   containerSize={70}
@@ -238,6 +244,11 @@ const Game: React.FC = () => {
         open={paymentModal}
         onClose={() => setPaymentModal(false)}
         qrCodeData={qrCodeData}
+      />
+      <ExtractModal
+        open={extractModal}
+        onClose={() => setExtractModal(false)}
+        extract={extract}
       />
     </View>
   );
