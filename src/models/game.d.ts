@@ -6,16 +6,3 @@ interface Game {
   transactions: Transactions;
   admin: string;
 }
-
-type Transactions = {
-  [key: string]: Transaction;
-};
-
-type Players = {
-  [key: string]: Player;
-};
-
-interface ChargeQrCode {
-  value: number;
-  receiver: User;
-}

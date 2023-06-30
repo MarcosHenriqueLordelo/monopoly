@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      height: 200,
+      height: 190,
       paddingTop: 20,
       paddingBottom: 28,
-      paddingLeft: 16,
+      paddingLeft: 20,
       backgroundColor: theme.colors.action,
       justifyContent: "space-between",
     },

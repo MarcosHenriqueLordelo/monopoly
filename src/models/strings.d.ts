@@ -34,6 +34,16 @@ interface Strings {
   close: string;
   extract: string;
   destiny: string;
+  rent: string;
+  mortgage: string;
+  edit: string;
+  addProperty: string;
+  remove: string;
+  welcome: string;
+  whereToGo: string;
+  createGame: string;
+  joinGame: string;
+  continueLastGame: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;
@@ -46,4 +56,10 @@ interface Strings {
   insuficientBalance: string;
   valueCantBeZero: string;
   invalidQrCode: string;
+  rentCantBeZero: string;
+  mortgageCantBeZero: string;
+  nameCantBeUndefined: string;
+  failedToUpdateProperty: string;
+  failedToRemoveProperty: string;
+  failedToAddProperty: string;
 }

@@ -23,6 +23,9 @@ import QrCodeModal from "../../modals/QrCodeModal";
 import PaymentModal from "../../modals/PaymentModal";
 import ExtractModal from "../../modals/ExtractModal";
 import ScoreboardModal from "../../modals/ScoreboardModal";
+import CreatePropertyModal from "../../modals/CreatePropertyModal";
+import PropertyListItem from "../../components/PropertyListItem";
+import EditPropertyModal from "../../modals/EditProperty";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
@@ -36,6 +39,8 @@ const Game: React.FC = () => {
   const [qrCodeData, setQrCodeData] = useState<ChargeQrCode>();
   const [scoreboard, setScoreboard] = useState<Player[]>([]);
   const [players, setPlayers] = useState<Players>();
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [property, setProperty] = useState<Property>();
 
   const [depositModal, setDepositModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
@@ -44,17 +49,11 @@ const Game: React.FC = () => {
   const [paymentModal, setPaymentModal] = useState(false);
   const [extractModal, setExtractModal] = useState(false);
   const [scoreboardModal, setScoreboardModal] = useState(false);
+  const [createPropertyModal, setCreatePropertyModal] = useState(false);
+  const [editPropertyModal, setEditPropertyModal] = useState(false);
   const [scanner, setScanner] = useState(false);
 
   const styles = getStyles(theme);
-
-  useEffect(() => {
-    if (!game || !user) return;
-
-    if (game.players[user.id] !== player) {
-      setPlayer(game.players[user.id]);
-    }
-  }, [game!.players[user!.id], user]);
 
   useEffect(() => {
     if (!game || !user) return;
@@ -72,6 +71,19 @@ const Game: React.FC = () => {
 
       setPlayers(game.players);
       setScoreboard(scoreboardAux);
+    }
+
+    if (game.players[user.id] !== player) {
+      setPlayer(game.players[user.id]);
+      if (game.players[user.id].properties) {
+        const propertiesAux = handleProperties(
+          game.players[user.id].properties
+        );
+        setProperties(propertiesAux);
+      } else {
+        setProperties([]);
+      }
+      setProperty(undefined);
     }
   }, [game, user]);
 
@@ -117,6 +129,15 @@ const Game: React.FC = () => {
     return scoreboardAux;
   };
 
+  const handleProperties = (data: Properties): Property[] => {
+    const keys = Object.keys(data);
+    const propertyAux: Property[] = [];
+
+    keys.forEach((key) => propertyAux.push(data[key]));
+
+    return propertyAux;
+  };
+
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -148,7 +169,7 @@ const Game: React.FC = () => {
         <Loading />
       ) : (
         <View style={styles.container}>
-          <Header onSettingsPress={() => console.log("settings pressed")} />
+          <Header />
           <ScrollView
             style={styles.content}
             showsVerticalScrollIndicator={false}
@@ -235,12 +256,28 @@ const Game: React.FC = () => {
               <Text style={styles.title}>{strings.myProperties}</Text>
               <IconButton
                 name="add"
-                onPress={() => console.log("settings pressed")}
+                onPress={() => setCreatePropertyModal(true)}
                 size={32}
                 color={theme.colors.fontDark}
                 style={{ marginRight: 16 }}
               />
             </View>
+
+            {properties.map((property, index) => (
+              <PropertyListItem
+                onEdit={() => {
+                  setProperty(property);
+                  setEditPropertyModal(true);
+                }}
+                onQrCode={(data) => {
+                  setQrCodeData(data);
+                  setQrCodeModal(true);
+                }}
+                property={property}
+                key={`${property.name}${index}`}
+              />
+            ))}
+            <Spacer height={32} />
           </ScrollView>
         </View>
       )}
@@ -279,6 +316,15 @@ const Game: React.FC = () => {
         open={scoreboardModal}
         onClose={() => setScoreboardModal(false)}
         scoreboard={scoreboard}
+      />
+      <CreatePropertyModal
+        open={createPropertyModal}
+        onClose={() => setCreatePropertyModal(false)}
+      />
+      <EditPropertyModal
+        onClose={() => setEditPropertyModal(false)}
+        open={editPropertyModal}
+        property={property}
       />
     </View>
   );

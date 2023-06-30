@@ -61,18 +61,18 @@ const MainMenu: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Header onSettingsPress={() => console.log("pressed")} />
+      <Header />
       <View style={styles.content}>
-        <Text style={styles.headline}>Bem-vindo ao Monopoly App!</Text>
-        <Text style={styles.subHeadline}>Onde você quer ir hoje?</Text>
+        <Text style={styles.headline}>{strings.welcome}</Text>
+        <Text style={styles.subHeadline}>{strings.whereToGo}</Text>
         <Spacer height={32} />
-        <Button label="Criar Partida" onPress={handleCreateGame} />
+        <Button label={strings.createGame} onPress={handleCreateGame} />
         <Spacer height={16} />
-        <Button label="Entrar em partida" onPress={handleOpenScanner} />
+        <Button label={strings.joinGame} onPress={handleOpenScanner} />
         <Spacer height={16} />
         <Button
           disabled={gameKey === undefined}
-          label="Continuar última partida"
+          label={strings.continueLastGame}
           onPress={() => handleQrCodeScanned(`monopolyapp:gameid:${gameKey!}`)}
         />
       </View>

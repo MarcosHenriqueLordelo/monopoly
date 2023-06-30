@@ -1,4 +1,4 @@
 export default {
-  gestureEnabled: false,
+  gestureEnabled: true,
   headerShown: false,
 };

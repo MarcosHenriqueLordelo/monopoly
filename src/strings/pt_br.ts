@@ -37,6 +37,16 @@ const pt_br: Strings = {
   close: "Fechar",
   extract: "Extrato",
   destiny: "Destino",
+  edit: "Editar",
+  mortgage: "Hipoteca",
+  rent: "Aluguél",
+  addProperty: "Adicionar Propriedade",
+  remove: "Remover",
+  continueLastGame: "Continuar última partida",
+  createGame: "Criar Partida",
+  joinGame: "Entrar em partida",
+  welcome: "Bem-vindo ao Monopoly App!",
+  whereToGo: "Onde você quer ir hoje?",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",
@@ -50,6 +60,12 @@ const pt_br: Strings = {
   insuficientBalance: "Saldo insuficiente",
   valueCantBeZero: "Valor não pode ser zero",
   invalidQrCode: "Código escaneado não é válido",
+  mortgageCantBeZero: "O valor da hipoteca não pode ser zero",
+  rentCantBeZero: "O valor do aluguél não pode ser zero",
+  nameCantBeUndefined: "O nome precisa ser preenchido",
+  failedToAddProperty: "Falha ao adicionar propriedade",
+  failedToRemoveProperty: "Falha ao remover propriedade",
+  failedToUpdateProperty: "Falha ao atualizar propriedade",
 };
 
 export default pt_br;

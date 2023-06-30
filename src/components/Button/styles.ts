@@ -4,8 +4,8 @@ const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       height: 40,
-      paddingHorizontal: 24,
-      borderRadius: 20,
+      paddingHorizontal: 16,
+      borderRadius: 10,
       backgroundColor: theme.colors.action,
       justifyContent: "center",
     },

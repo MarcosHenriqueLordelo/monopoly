@@ -5,9 +5,19 @@ import Lobby from "../screens/Lobby";
 import Game from "../screens/Game";
 
 import useFirebase from "../contexts/firebase/useFirebase";
+import { useNavigation } from "@react-navigation/native";
 
 const GameNav: React.FC = () => {
-  const { game } = useFirebase();
+  const { game, stopListening } = useFirebase();
+  const navigation = useNavigation();
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      stopListening();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const renderScreen = useMemo(() => {
     if (!game) return <Lobby />;

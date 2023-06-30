@@ -4,3 +4,7 @@ interface Transaction {
   value: number;
   timestamp: number;
 }
+
+interface Transactions {
+  [key: string]: Transaction;
+}

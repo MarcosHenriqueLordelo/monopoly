@@ -1,18 +1,14 @@
-import React, { useEffect, useMemo } from "react";
-import { View, Text } from "react-native";
+import React from "react";
+import { View, Text, Image } from "react-native";
 
 import useUi from "../../contexts/ui/useUi";
 import useUser from "../../contexts/user/useUser";
 
+import userImage from "../../../assets/userImage.png";
+
 import getStyles from "./styles";
 
-import IconButton from "../IconButton";
-
-interface PropTypes {
-  onSettingsPress: () => void;
-}
-
-const Header: React.FC<PropTypes> = ({ onSettingsPress }) => {
+const Header: React.FC = () => {
   const { theme, strings } = useUi();
   const { user } = useUser();
 
@@ -21,12 +17,10 @@ const Header: React.FC<PropTypes> = ({ onSettingsPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <View style={styles.userImage} />
-        <IconButton
-          name="settings"
-          size={24}
-          onPress={onSettingsPress}
-          containerSize={48}
+        <Image
+          source={userImage}
+          style={styles.userImage}
+          resizeMode="contain"
         />
       </View>
       <Text style={styles.userName}>

@@ -33,6 +33,7 @@ interface FirebaseContext {
   getPlayerData: (userId: string) => Promise<User | undefined>;
   leaveLobby: () => void;
   listenToGame: (gameId: string) => void;
+  stopListening: () => void;
   clearGame: () => void;
   startGame: (lobbyData: User[]) => void;
   makeTransaction: (
@@ -41,6 +42,9 @@ interface FirebaseContext {
     value: number
   ) => void;
   gameKey?: string;
+  addProperty: (property: Property) => void;
+  updateProperty: (property: Property) => void;
+  deleteProperty: (property: Property) => void;
 }
 
 const FirebaseContext = createContext<FirebaseContext>({} as FirebaseContext);
@@ -242,7 +246,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
           players[playerData.id] = {
             ...playerData,
             money: 15000000,
-            properties: [],
+            properties: {},
             color: theme.colors.action,
           };
 
@@ -320,6 +324,71 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
     await AsyncStorage.setItem(`${TOKEN_KEY}:gameId`, gameId || "null");
   };
 
+  const addProperty = useCallback(
+    async (property: Property) => {
+      if (!game || !user || !db) return;
+      try {
+        if (property.rent === 0) throw new Error(strings.rentCantBeZero);
+        if (property.mortgage === 0)
+          throw new Error(strings.mortgageCantBeZero);
+
+        const propertyRef = ref(
+          db,
+          `Games/${game.id}/players/${user.id}/properties/${property.id}`
+        );
+
+        await set(propertyRef, property);
+      } catch (err: any) {
+        showSnackbar(
+          err.mensage || strings.failedToAddProperty,
+          theme.colors.error
+        );
+      }
+    },
+    [game, user, db]
+  );
+
+  const updateProperty = useCallback(
+    async (property: Property) => {
+      if (!game || !user || !db) return;
+      try {
+        if (property.rent === 0) throw new Error(strings.rentCantBeZero);
+        if (property.mortgage === 0)
+          throw new Error(strings.mortgageCantBeZero);
+
+        const propertyRef = ref(
+          db,
+          `Games/${game.id}/players/${user.id}/properties/${property.id}`
+        );
+
+        await update(propertyRef, property);
+      } catch (err: any) {
+        showSnackbar(
+          err.mensage || strings.failedToUpdateProperty,
+          theme.colors.error
+        );
+      }
+    },
+    [game, user, db]
+  );
+
+  const deleteProperty = useCallback(
+    async (property: Property) => {
+      if (!game || !user || !db) return;
+      try {
+        const propertyRef = ref(
+          db,
+          `Games/${game.id}/players/${user.id}/properties/${property.id}`
+        );
+
+        await remove(propertyRef);
+      } catch {
+        showSnackbar(strings.failedToRemoveProperty, theme.colors.error);
+      }
+    },
+    [game, user, db]
+  );
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -329,10 +398,14 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         getPlayerData,
         leaveLobby,
         listenToGame,
+        stopListening,
         clearGame,
         startGame,
         makeTransaction,
         gameKey,
+        addProperty,
+        updateProperty,
+        deleteProperty,
       }}
     >
       {children}
