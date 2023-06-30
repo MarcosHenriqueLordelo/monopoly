@@ -36,6 +36,7 @@ const pt_br: Strings = {
     "Ops... parece que não consiguimos encontrar o jogo que procura em nosso banco de dados",
   close: "Fechar",
   extract: "Extrato",
+  destiny: "Destino",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",

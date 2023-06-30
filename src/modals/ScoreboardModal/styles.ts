@@ -12,6 +12,7 @@ const getStyles = (theme: Theme) =>
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      marginBottom: 16,
     },
     title: {
       fontSize: theme.font.title.large.size,
@@ -20,43 +21,35 @@ const getStyles = (theme: Theme) =>
       lineHeight: theme.font.title.large.lineHeight,
       color: theme.colors.fontDark,
     },
-    input: {
-      color: theme.colors.fontDark,
-      paddingVertical: 8,
+    listItem: {
       paddingHorizontal: 16,
-      fontSize: theme.font.body.large.size,
-      fontWeight: theme.font.body.large.weight,
-      letterSpacing: theme.font.body.large.tracking,
-      lineHeight: theme.font.body.large.lineHeight,
-      backgroundColor: theme.colors.background,
-      flex: 1,
-      textAlign: "center",
-      borderRadius: 6,
-    },
-    inputContainer: {
+      paddingVertical: 8,
+      borderRadius: 10,
+      backgroundColor: theme.colors.action,
+      marginTop: 8,
       flexDirection: "row",
-      marginTop: 32,
-      marginBottom: 16,
-      alignItems: "center",
+      justifyContent: "space-between",
     },
-    loadingView: {
-      position: "absolute",
-      width: "100%",
-      height: "100%",
+    arrow: {
+      fontSize: theme.font.title.large.size,
+      fontWeight: theme.font.title.large.weight,
+      letterSpacing: theme.font.title.large.tracking,
+      lineHeight: theme.font.title.large.lineHeight,
+      color: theme.colors.fontLight,
     },
-    receiversView: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-evenly",
-      marginBottom: 32,
-    },
-    destiny: {
+    name: {
       fontSize: theme.font.title.medium.size,
       fontWeight: theme.font.title.medium.weight,
       letterSpacing: theme.font.title.medium.tracking,
       lineHeight: theme.font.title.medium.lineHeight,
-      color: theme.colors.fontDark,
-      marginBottom: 16,
+      color: theme.colors.fontLight,
+    },
+    position: {
+      fontSize: theme.font.display.small.size,
+      fontWeight: theme.font.display.small.weight,
+      letterSpacing: theme.font.display.small.tracking,
+      lineHeight: theme.font.display.small.lineHeight,
+      color: theme.colors.fontLight,
     },
   });
 

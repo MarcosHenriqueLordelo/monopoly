@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import { View, Text, ScrollView } from "react-native";
 import moment from "moment";
 
@@ -46,7 +46,7 @@ const ExtractModal: React.FC<PropTypes> = ({ open, onClose, extract }) => {
         <View style={styles.listTop}>
           <Text style={styles.name}>{format(transfer.value)}</Text>
           <Text style={styles.name}>
-            {moment.unix(transfer.timestamp).format("LT")}
+            {moment.unix(transfer.timestamp).format("hh:mm")}
           </Text>
         </View>
       </View>

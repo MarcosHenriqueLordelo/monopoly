@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+import moment from "moment";
 
 import getStyles from "./styles";
 
@@ -21,7 +22,7 @@ import ChargeModal from "../../modals/ChargeModal ";
 import QrCodeModal from "../../modals/QrCodeModal";
 import PaymentModal from "../../modals/PaymentModal";
 import ExtractModal from "../../modals/ExtractModal";
-import moment from "moment";
+import ScoreboardModal from "../../modals/ScoreboardModal";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
@@ -33,6 +34,8 @@ const Game: React.FC = () => {
   const [transactions, setTransactions] = useState<Transactions>({});
   const [extract, setExtract] = useState<Transaction[]>([]);
   const [qrCodeData, setQrCodeData] = useState<ChargeQrCode>();
+  const [scoreboard, setScoreboard] = useState<Player[]>([]);
+  const [players, setPlayers] = useState<Players>();
 
   const [depositModal, setDepositModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
@@ -40,6 +43,7 @@ const Game: React.FC = () => {
   const [qrCodeModal, setQrCodeModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
   const [extractModal, setExtractModal] = useState(false);
+  const [scoreboardModal, setScoreboardModal] = useState(false);
   const [scanner, setScanner] = useState(false);
 
   const styles = getStyles(theme);
@@ -55,11 +59,24 @@ const Game: React.FC = () => {
   useEffect(() => {
     if (!game || !user) return;
 
-    if (game.transactions === transactions) return;
+    if (game.transactions !== transactions) {
+      handleTransactions(game.transactions);
+      const extractAux = handleExtract(game.transactions);
 
-    const keys = Object.keys(game.transactions);
-    const aux = transactions;
-    const auxKeys = Object.keys(aux);
+      setExtract(extractAux);
+      setTransactions(game.transactions);
+    }
+
+    if (game.players !== players) {
+      const scoreboardAux = handleScoreboard(game.players);
+
+      setPlayers(game.players);
+      setScoreboard(scoreboardAux);
+    }
+  }, [game, user]);
+
+  const handleTransactions = (data: Transactions) => {
+    const keys = Object.keys(data);
 
     const format = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -67,33 +84,38 @@ const Game: React.FC = () => {
     }).format;
 
     keys.forEach((key) => {
-      const transaction = game.transactions[key];
-
-      if (!auxKeys.includes(key)) {
-        aux[key] = transaction;
-        if (transaction.receiver === user!.id) {
-          auxKeys.push(key);
-          if (moment().unix() - transaction.timestamp < 60000)
-            showSnackbar(
-              `${strings.transferReceived} ${format(transaction.value)}`,
-              theme.colors.success
-            );
-        }
+      const transaction = data[key];
+      if (transaction.receiver === user!.id) {
+        if ((moment().unix() - transaction.timestamp) / 1000 < 0.06)
+          showSnackbar(
+            `${strings.transferReceived} ${format(transaction.value)}`,
+            theme.colors.success
+          );
       }
     });
+  };
 
-    setTransactions(aux);
-
+  const handleExtract = (data: Transactions): Transaction[] => {
+    const keys = Object.keys(data);
     const extractAux: Transaction[] = [];
 
-    keys.forEach((key) => {
-      extractAux.push(transactions[key]);
-    });
+    keys.forEach((key) => extractAux.push(data[key]));
 
     extractAux.sort((a, b) => b.timestamp - a.timestamp);
 
-    setExtract(extractAux);
-  }, [game, user]);
+    return extractAux;
+  };
+
+  const handleScoreboard = (data: Players): Player[] => {
+    const keys = Object.keys(data);
+    const scoreboardAux: Player[] = [];
+
+    keys.forEach((key) => scoreboardAux.push(data[key]));
+
+    scoreboardAux.sort((a, b) => b.money - a.money);
+
+    return scoreboardAux;
+  };
 
   const formater = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -197,7 +219,10 @@ const Game: React.FC = () => {
               </View>
               <Spacer width={16} />
             </ScrollView>
-            <TouchableOpacity style={styles.scoreboardContainer}>
+            <TouchableOpacity
+              style={styles.scoreboardContainer}
+              onPress={() => setScoreboardModal(true)}
+            >
               <MaterialIcon
                 name="leaderboard"
                 size={24}
@@ -249,6 +274,11 @@ const Game: React.FC = () => {
         open={extractModal}
         onClose={() => setExtractModal(false)}
         extract={extract}
+      />
+      <ScoreboardModal
+        open={scoreboardModal}
+        onClose={() => setScoreboardModal(false)}
+        scoreboard={scoreboard}
       />
     </View>
   );

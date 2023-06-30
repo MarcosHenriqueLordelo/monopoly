@@ -119,6 +119,7 @@ const TransferModal: React.FC<PropTypes> = ({ open, onClose }) => {
             onPress={() => handleMultiplierChanged("K")}
           />
         </View>
+        <Text style={styles.destiny}>{strings.destiny}:</Text>
         <View style={styles.receiversView}>
           <SelectableChip
             label={strings.bank}

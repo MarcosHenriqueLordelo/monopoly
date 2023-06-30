@@ -33,6 +33,7 @@ interface Strings {
   opsGameNotFound: string;
   close: string;
   extract: string;
+  destiny: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;
