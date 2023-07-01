@@ -46,7 +46,7 @@ const ExtractModal: React.FC<PropTypes> = ({ open, onClose, extract }) => {
         <View style={styles.listTop}>
           <Text style={styles.name}>{format(transfer.value)}</Text>
           <Text style={styles.name}>
-            {moment.unix(transfer.timestamp).format("hh:mm")}
+            {moment.unix(transfer.timestamp).format("HH:mm")}
           </Text>
         </View>
       </View>

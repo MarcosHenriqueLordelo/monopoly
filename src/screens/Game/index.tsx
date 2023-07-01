@@ -236,7 +236,7 @@ const Game: React.FC = () => {
                   containerSize={70}
                   style={styles.buttonContainer}
                 />
-                <Text style={styles.buttonLabel}>{strings.history}</Text>
+                <Text style={styles.buttonLabel}>{strings.extract}</Text>
               </View>
               <Spacer width={16} />
             </ScrollView>

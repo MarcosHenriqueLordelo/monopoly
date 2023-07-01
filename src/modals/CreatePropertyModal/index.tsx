@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import * as Crypto from "expo-crypto";
 
@@ -16,7 +16,6 @@ import useSnackbar from "../../contexts/snackbar/useSnackbar";
 import useUser from "../../contexts/user/useUser";
 import useFirebase from "../../contexts/firebase/useFirebase";
 import Loading from "../../components/Loading";
-import TextField from "../../components/TextField";
 
 interface PropTypes {
   open?: boolean;
@@ -106,7 +105,13 @@ const CreatePropertyModal: React.FC<PropTypes> = ({ open, onClose }) => {
         <View style={styles.headerView}>
           <Text style={styles.title}>{strings.addProperty}</Text>
         </View>
-        <TextField modal label="Nome" value={name} onValueChanged={setName} />
+        <TextInput
+          style={styles.nameInput}
+          placeholder="Nome"
+          value={name}
+          onChangeText={setName}
+          autoComplete="off"
+        />
         <Spacer height={16} />
         <View style={styles.inputContainer}>
           <TextInputMask

@@ -44,7 +44,7 @@ const TransferModal: React.FC<PropTypes> = ({ open, onClose }) => {
     else setReceiver(key);
   };
 
-  const handleMakeDeposit = useCallback(() => {
+  const handleMakeDeposit = () => {
     if (textInputRef.current && user) {
       let value = textInputRef.current.getRawValue();
       if (value === 0 || !value) {
@@ -57,7 +57,7 @@ const TransferModal: React.FC<PropTypes> = ({ open, onClose }) => {
         handleClose();
       }
     }
-  }, [textInputRef, multiplier]);
+  };
 
   const handleClose = () => {
     setInputValue("");

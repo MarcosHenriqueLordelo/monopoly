@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
-import * as Crypto from "expo-crypto";
 
 import ModalContainer from "../ModalContainer";
 
@@ -16,7 +15,6 @@ import useSnackbar from "../../contexts/snackbar/useSnackbar";
 import useUser from "../../contexts/user/useUser";
 import useFirebase from "../../contexts/firebase/useFirebase";
 import Loading from "../../components/Loading";
-import TextField from "../../components/TextField";
 import IconButton from "../../components/IconButton";
 
 interface PropTypes {
@@ -148,7 +146,13 @@ const EditPropertyModal: React.FC<PropTypes> = ({
             color={theme.colors.fontDark}
           />
         </View>
-        <TextField modal label="Nome" value={name} onValueChanged={setName} />
+        <TextInput
+          style={styles.nameInput}
+          placeholder="Nome"
+          value={name}
+          onChangeText={setName}
+          autoComplete="off"
+        />
         <Spacer height={16} />
         <View style={styles.inputContainer}>
           <TextInputMask
