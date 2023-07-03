@@ -13,6 +13,15 @@ const getStyles = (theme: Theme) =>
       paddingRight: 16,
       alignSelf: "center",
       width: "89%",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
     },
     rowContainer: {
       flexDirection: "row",

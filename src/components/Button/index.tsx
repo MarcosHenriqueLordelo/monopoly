@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { TouchableOpacity, Text } from "react-native";
 
 import useUi from "../../contexts/ui/useUi";
@@ -13,7 +13,7 @@ interface PropTypes {
 const Button: React.FC<PropTypes> = ({ label, onPress, disabled }) => {
   const { theme } = useUi();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   return (
     <TouchableOpacity

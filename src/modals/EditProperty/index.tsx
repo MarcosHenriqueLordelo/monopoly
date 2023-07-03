@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 
@@ -46,7 +46,7 @@ const EditPropertyModal: React.FC<PropTypes> = ({
   const rentInputRef = useRef<any>(null);
   const mortgageInputRef = useRef<any>(null);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   useEffect(() => {
     if (!property) return;
@@ -143,7 +143,6 @@ const EditPropertyModal: React.FC<PropTypes> = ({
             name="close"
             onPress={onClose}
             size={24}
-            color={theme.colors.fontDark}
           />
         </View>
         <TextInput

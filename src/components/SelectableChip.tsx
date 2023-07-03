@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ViewStyle } from "../../node_modules/react-native/Libraries/StyleSheet/StyleSheetTypes";
 
@@ -18,13 +18,16 @@ const SelectableChip: React.FC<PropTypes> = ({
   style,
 }) => {
   const { theme } = useUi();
-  const styles = getStyles(theme);
+
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   return (
     <TouchableOpacity
       style={{
         ...styles.container,
         backgroundColor: selected ? theme.colors.action : undefined,
+        borderWidth: selected ? 1 : 0,
+        borderColor: theme.colors.fontLight,
         ...style,
       }}
       onPress={onPress}
@@ -32,7 +35,7 @@ const SelectableChip: React.FC<PropTypes> = ({
       <Text
         style={{
           ...styles.label,
-          color: selected ? theme.colors.fontLight : theme.colors.fontDark,
+          color: theme.colors.fontLight,
         }}
       >
         {label}

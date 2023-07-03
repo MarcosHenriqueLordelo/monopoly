@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { ReactNode, useMemo } from "react";
+import { View, Text } from "react-native";
 import ModalContainer from "../ModalContainer";
 
 import getStyles from "./styles";
@@ -20,7 +20,7 @@ const ScoreboardModal: React.FC<PropTypes> = ({
 }) => {
   const { theme, strings } = useUi();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const renderList = (): ReactNode => {
     const format = new Intl.NumberFormat("pt-BR", {
@@ -48,7 +48,6 @@ const ScoreboardModal: React.FC<PropTypes> = ({
             name="close"
             onPress={onClose}
             size={24}
-            color={theme.colors.fontDark}
           />
         </View>
         {renderList()}

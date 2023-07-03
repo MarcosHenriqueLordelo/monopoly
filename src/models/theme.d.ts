@@ -41,3 +41,11 @@ interface Font {
   medium: FontItem;
   large: FontItem;
 }
+
+type ThemeName =
+  | "orange"
+  | "red"
+  | "blue"
+  | "darkGreen"
+  | "darkGray"
+  | "purple";

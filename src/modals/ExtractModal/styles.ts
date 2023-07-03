@@ -5,7 +5,7 @@ const getStyles = (theme: Theme) =>
     container: {
       width: "75%",
       padding: 16,
-      backgroundColor: theme.colors.section,
+      backgroundColor: theme.colors.action,
       borderRadius: 10,
       maxHeight: "60%",
       minHeight: 200,
@@ -21,11 +21,10 @@ const getStyles = (theme: Theme) =>
       fontWeight: theme.font.title.large.weight,
       letterSpacing: theme.font.title.large.tracking,
       lineHeight: theme.font.title.large.lineHeight,
-      color: theme.colors.fontDark,
+      color: theme.colors.fontLight,
     },
     listItem: {
       flex: 1,
-      paddingHorizontal: 16,
       paddingVertical: 8,
       borderRadius: 10,
       backgroundColor: theme.colors.action,

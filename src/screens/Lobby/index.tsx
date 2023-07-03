@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import QRCode from "react-native-qrcode-svg";
@@ -21,7 +21,7 @@ const Lobby: React.FC = () => {
   const { user } = useUser();
   const navigation = useNavigation();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const [lobbyData, setLobbyData] = useState<User[]>([]);
 

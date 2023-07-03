@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { View } from "react-native";
 import { BarCodeScannedCallback, BarCodeScanner } from "expo-barcode-scanner";
 
@@ -15,9 +15,9 @@ interface PropTypes {
 
 const QrCodeScanner: React.FC<PropTypes> = ({ onQrCodeScanned, onClose }) => {
   const [scanned, setScanned] = useState(false);
-  const { theme, strings } = useUi();
+  const { theme } = useUi();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleBarCodeScanned: BarCodeScannedCallback = ({ data, type }) => {
     if (data.includes("monopolyapp")) {

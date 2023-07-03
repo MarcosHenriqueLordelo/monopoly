@@ -5,8 +5,9 @@ const getStyles = (theme: Theme) =>
     container: {
       height: 190,
       paddingTop: 20,
-      paddingBottom: 28,
+      paddingBottom: 40,
       paddingLeft: 20,
+      paddingRight: 20,
       backgroundColor: theme.colors.action,
       justifyContent: "space-between",
     },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 import IconButton from "../IconButton";
 import useUi from "../../contexts/ui/useUi";
@@ -20,7 +20,7 @@ const PropertyListItem: React.FC<PropTypes> = ({
   const { theme, strings } = useUi();
   const { user } = useUser();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const formatMortgage = (): string => {
     const format = new Intl.NumberFormat("pt-BR", {

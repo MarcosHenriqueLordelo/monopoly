@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { View, Text } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
@@ -19,7 +19,7 @@ interface PropTypes {
 const QrCodeModal: React.FC<PropTypes> = ({ open, onClose, qrCodeData }) => {
   const { theme, strings } = useUi();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleClose = () => {
     onClose();

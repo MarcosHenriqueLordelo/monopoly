@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { StackActions, useNavigation } from "@react-navigation/native";
@@ -23,7 +23,7 @@ const MainMenu: React.FC = () => {
   const [barCodePermisison, setBarCodePermission] = useState(false);
   const [scanner, setScanner] = useState(false);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {

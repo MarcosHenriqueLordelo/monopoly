@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { View, Text, ScrollView } from "react-native";
 import moment from "moment";
 
@@ -20,7 +20,7 @@ const ExtractModal: React.FC<PropTypes> = ({ open, onClose, extract }) => {
   const { theme, strings } = useUi();
   const { game } = useFirebase();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const renderList = (): ReactNode => {
     const format = new Intl.NumberFormat("pt-BR", {
@@ -62,7 +62,6 @@ const ExtractModal: React.FC<PropTypes> = ({ open, onClose, extract }) => {
             name="close"
             onPress={onClose}
             size={24}
-            color={theme.colors.fontDark}
           />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>

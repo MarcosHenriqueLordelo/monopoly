@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 
@@ -31,7 +31,7 @@ const DepositModal: React.FC<PropTypes> = ({ open, onClose }) => {
   const [multiplier, setMultiplier] = useState<"M" | "K" | undefined>();
   const textInputRef = useRef<any>(null);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleMultiplierChanged = (key: "M" | "K") => {
     if (multiplier === key) setMultiplier(undefined);

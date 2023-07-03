@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useRef, useState } from "react";
+import React, { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 
@@ -32,7 +32,7 @@ const TransferModal: React.FC<PropTypes> = ({ open, onClose }) => {
   const [receiver, setReceiver] = useState<string>("bank");
   const textInputRef = useRef<any>(null);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleMultiplierChanged = (key: "M" | "K") => {
     if (multiplier === key) setMultiplier(undefined);

@@ -27,7 +27,7 @@ const getStyles = (theme: Theme) =>
     },
     buttonsView: {
       flexDirection: "row",
-      marginVertical: 32,
+      marginBottom: 32,
       paddingLeft: 16,
     },
     buttonItem: {
@@ -36,7 +36,7 @@ const getStyles = (theme: Theme) =>
     },
     buttonContainer: {
       borderRadius: 100,
-      backgroundColor: theme.colors.section,
+      backgroundColor: theme.colors.action,
     },
     buttonLabel: {
       fontSize: theme.font.body.large.size,
@@ -47,7 +47,7 @@ const getStyles = (theme: Theme) =>
     scoreboardContainer: {
       borderRadius: 10,
       width: "89%",
-      backgroundColor: theme.colors.section,
+      backgroundColor: theme.colors.action,
       flexDirection: "row",
       paddingVertical: 14,
       paddingHorizontal: 16,
@@ -59,6 +59,7 @@ const getStyles = (theme: Theme) =>
       letterSpacing: theme.font.title.large.tracking,
       lineHeight: theme.font.title.large.lineHeight,
       marginLeft: 16,
+      color: theme.colors.fontLight,
     },
     divider: {
       height: 1,
@@ -71,7 +72,25 @@ const getStyles = (theme: Theme) =>
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: 16,
+      marginBottom: 32,
+    },
+    ballanceContainer: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
+      alignSelf: "center",
+      width: "89%",
+      backgroundColor: theme.colors.section,
+      height: 150,
+      borderRadius: 10,
+      marginTop: -32,
+      padding: 16,
     },
   });
 

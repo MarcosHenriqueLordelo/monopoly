@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text } from "react-native";
 import * as Crypto from "expo-crypto";
 
@@ -19,7 +19,8 @@ const Login: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [uid, setUid] = useState("");
   const [error, setError] = useState<string>();
-  const styles = getStyles(theme);
+  
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   useEffect(() => {
     if (user) {

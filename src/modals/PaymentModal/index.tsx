@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { View, Text } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
@@ -25,7 +25,7 @@ const PaymentModal: React.FC<PropTypes> = ({ open, onClose, qrCodeData }) => {
   const { showSnackbar } = useSnackbar();
   const { makeTransaction } = useFirebase();
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleClose = () => {
     onClose();

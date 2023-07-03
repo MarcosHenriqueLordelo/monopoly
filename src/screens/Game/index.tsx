@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 import moment from "moment";
@@ -18,7 +18,7 @@ import useSnackbar from "../../contexts/snackbar/useSnackbar";
 
 import DepositModal from "../../modals/DepositModal";
 import TransferModal from "../../modals/TransferModal";
-import ChargeModal from "../../modals/ChargeModal ";
+import ChargeModal from "../../modals/ChargeModal";
 import QrCodeModal from "../../modals/QrCodeModal";
 import PaymentModal from "../../modals/PaymentModal";
 import ExtractModal from "../../modals/ExtractModal";
@@ -53,7 +53,7 @@ const Game: React.FC = () => {
   const [editPropertyModal, setEditPropertyModal] = useState(false);
   const [scanner, setScanner] = useState(false);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   useEffect(() => {
     if (!game || !user) return;
@@ -170,14 +170,16 @@ const Game: React.FC = () => {
       ) : (
         <View style={styles.container}>
           <Header />
-          <ScrollView
-            style={styles.content}
-            showsVerticalScrollIndicator={false}
-          >
+          <View style={styles.ballanceContainer}>
             <Text style={styles.title}>{strings.balance}</Text>
             <Text style={styles.ballanceValue}>
               {formater.format(player.money)}
             </Text>
+          </View>
+          <ScrollView
+            style={styles.content}
+            showsVerticalScrollIndicator={false}
+          >
             <ScrollView
               style={styles.buttonsView}
               horizontal
@@ -187,9 +189,9 @@ const Game: React.FC = () => {
                 <IconButton
                   name="north"
                   onPress={() => setTransferModal(true)}
-                  size={32}
-                  color={theme.colors.fontDark}
-                  containerSize={70}
+                  size={24}
+                  color={theme.colors.fontLight}
+                  containerSize={56}
                   style={styles.buttonContainer}
                 />
                 <Text style={styles.buttonLabel}>{strings.transfer}</Text>
@@ -198,9 +200,9 @@ const Game: React.FC = () => {
                 <IconButton
                   name="south"
                   onPress={() => setDepositModal(true)}
-                  size={32}
-                  color={theme.colors.fontDark}
-                  containerSize={70}
+                  size={24}
+                  color={theme.colors.fontLight}
+                  containerSize={56}
                   style={styles.buttonContainer}
                 />
                 <Text style={styles.buttonLabel}>{strings.deposit}</Text>
@@ -209,9 +211,9 @@ const Game: React.FC = () => {
                 <IconButton
                   name="qr-code-scanner"
                   onPress={() => setScanner(true)}
-                  size={32}
-                  color={theme.colors.fontDark}
-                  containerSize={70}
+                  size={24}
+                  color={theme.colors.fontLight}
+                  containerSize={56}
                   style={styles.buttonContainer}
                 />
                 <Text style={styles.buttonLabel}>{strings.pay}</Text>
@@ -220,9 +222,9 @@ const Game: React.FC = () => {
                 <IconButton
                   name="attach-money"
                   onPress={() => setChargeModal(true)}
-                  size={32}
-                  color={theme.colors.fontDark}
-                  containerSize={70}
+                  size={24}
+                  color={theme.colors.fontLight}
+                  containerSize={56}
                   style={styles.buttonContainer}
                 />
                 <Text style={styles.buttonLabel}>{strings.charge}</Text>
@@ -231,9 +233,9 @@ const Game: React.FC = () => {
                 <IconButton
                   name="history"
                   onPress={() => setExtractModal(true)}
-                  size={32}
-                  color={theme.colors.fontDark}
-                  containerSize={70}
+                  size={24}
+                  color={theme.colors.fontLight}
+                  containerSize={56}
                   style={styles.buttonContainer}
                 />
                 <Text style={styles.buttonLabel}>{strings.extract}</Text>
@@ -247,7 +249,7 @@ const Game: React.FC = () => {
               <MaterialIcon
                 name="leaderboard"
                 size={24}
-                color={theme.colors.fontDark}
+                color={theme.colors.fontLight}
               />
               <Text style={styles.scoreboardLabel}>{strings.scoreboard}</Text>
             </TouchableOpacity>
@@ -257,7 +259,7 @@ const Game: React.FC = () => {
               <IconButton
                 name="add"
                 onPress={() => setCreatePropertyModal(true)}
-                size={32}
+                size={24}
                 color={theme.colors.fontDark}
                 style={{ marginRight: 16 }}
               />

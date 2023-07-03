@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import * as Crypto from "expo-crypto";
@@ -41,7 +41,7 @@ const CreatePropertyModal: React.FC<PropTypes> = ({ open, onClose }) => {
   const rentInputRef = useRef<any>(null);
   const mortgageInputRef = useRef<any>(null);
 
-  const styles = getStyles(theme);
+  const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleMultiplierChanged = (
     key: "M" | "K",
