@@ -1,8 +1,8 @@
 const pt_br: Strings = {
-  appName: "Monopoly Pix",
+  appName: "Monopix",
   appIntro1: "Olá ",
   appIntro2:
-    " Estamos felizes em tê-lo(a) no Monopoly App. Prepare-se para vivenciar a emoção de negociações, estratégias e vitórias no mundo imobiliário. Divirta-se!",
+    " Estamos felizes em tê-lo(a) no Monopix App. Prepare-se para vivenciar a emoção de negociações, estratégias e vitórias no mundo imobiliário. Divirta-se!",
   continue: "Continuar",
   hello: "Olá, ",
   lobby: "Saguão",
@@ -45,8 +45,8 @@ const pt_br: Strings = {
   continueLastGame: "Continuar última partida",
   createGame: "Criar Partida",
   joinGame: "Entrar em partida",
-  welcome: "Bem-vindo ao Monopoly App!",
-  whereToGo: "Onde você quer ir hoje?",
+  welcome: "Bem-vindo ao Monopix App!",
+  whereToGo: "O que deseja fazer hoje?",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",

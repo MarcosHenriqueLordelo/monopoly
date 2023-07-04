@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "bundle": "eas build -p android --profile production",
+    "apk": "eas build -p android --profile development",
+    "ipa": "eas build -p ios --profile development"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.17.11",
@@ -24,14 +24,14 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-safe-area-context": "4.5.0",
-    "react-native-svg": "13.4.0"
+    "react-native-svg": "13.4.0",
+    "react-native-gesture-handler": "~2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.0.14",
     "@types/react-native": "~0.69.1",
     "@types/react-native-dotenv": "^0.2.0",
-    "@types/uuid": "^9.0.2",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "react-native-dotenv": "^3.4.9",
     "typescript": "^4.9.4"

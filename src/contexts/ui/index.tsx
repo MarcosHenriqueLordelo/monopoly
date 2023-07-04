@@ -29,7 +29,7 @@ const UiContext = createContext<UiContext>({} as UiContext);
 
 export const UiProvider: React.FC<DefaultProps> = ({ children }) => {
   const [strings, setStrings] = useState<Strings>(defaultLanguage);
-  const [theme, setTheme] = useState<Theme>(themeDarkGray);
+  const [theme, setTheme] = useState<Theme>(themeBlue);
   const [language, setLanguage] = useState<string>("pt-br");
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);

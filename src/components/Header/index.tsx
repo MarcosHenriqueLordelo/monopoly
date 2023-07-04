@@ -1,10 +1,8 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { View, Text, Image } from "react-native";
+import React, { useMemo, useState } from "react";
+import { View, Text } from "react-native";
 
 import useUi from "../../contexts/ui/useUi";
 import useUser from "../../contexts/user/useUser";
-
-import userImage from "../../../assets/userImage.png";
 
 import getStyles from "./styles";
 import IconButton from "../IconButton";
@@ -37,11 +35,7 @@ const Header: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <Image
-          source={userImage}
-          style={styles.userImage}
-          resizeMode="contain"
-        />
+        <View />
         <IconButton name="palette" onPress={handleSwitchTheme} size={24} />
       </View>
       <Text style={styles.userName}>
