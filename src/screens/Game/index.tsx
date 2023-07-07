@@ -29,7 +29,7 @@ import EditPropertyModal from "../../modals/EditProperty";
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
-  const { game } = useFirebase();
+  const { game, deleteProperty } = useFirebase();
   const { user } = useUser();
   const { showSnackbar } = useSnackbar();
 
@@ -41,6 +41,7 @@ const Game: React.FC = () => {
   const [players, setPlayers] = useState<Players>();
   const [properties, setProperties] = useState<Property[]>([]);
   const [property, setProperty] = useState<Property>();
+  const [transactionsIds, setTransactionsIds] = useState<string[]>([]);
 
   const [depositModal, setDepositModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
@@ -59,11 +60,12 @@ const Game: React.FC = () => {
     if (!game || !user) return;
 
     if (game.transactions !== transactions) {
-      handleTransactions(game.transactions);
+      const ids = handleTransactions(game.transactions, transactionsIds);
       const extractAux = handleExtract(game.transactions);
 
       setExtract(extractAux);
       setTransactions(game.transactions);
+      setTransactionsIds(ids);
     }
 
     if (game.players !== players) {
@@ -87,8 +89,9 @@ const Game: React.FC = () => {
     }
   }, [game, user]);
 
-  const handleTransactions = (data: Transactions) => {
+  const handleTransactions = (data: Transactions, ids: string[]): string[] => {
     const keys = Object.keys(data);
+    const aux = ids;
 
     const format = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -98,13 +101,18 @@ const Game: React.FC = () => {
     keys.forEach((key) => {
       const transaction = data[key];
       if (transaction.receiver === user!.id) {
-        if ((moment().unix() - transaction.timestamp) / 1000 < 0.06)
-          showSnackbar(
-            `${strings.transferReceived} ${format(transaction.value)}`,
-            theme.colors.success
-          );
+        if (!aux.includes(key)) {
+          if ((moment().unix() - transaction.timestamp) / 1000 < 0.06)
+            showSnackbar(
+              `${strings.transferReceived} ${format(transaction.value)}`,
+              theme.colors.success
+            );
+          aux.push(key);
+        }
       }
     });
+
+    return aux;
   };
 
   const handleExtract = (data: Transactions): Transaction[] => {
@@ -153,6 +161,10 @@ const Game: React.FC = () => {
     } else {
       showSnackbar(strings.invalidQrCode, theme.colors.error);
     }
+  };
+
+  const onDeleteProperty = (propertyData: Property) => {
+    deleteProperty(propertyData);
   };
 
   if (scanner)
@@ -277,6 +289,7 @@ const Game: React.FC = () => {
                 }}
                 property={property}
                 key={`${property.name}${index}`}
+                onDelete={() => onDeleteProperty(property)}
               />
             ))}
             <Spacer height={32} />

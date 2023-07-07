@@ -3,14 +3,9 @@ import { StyleSheet } from "react-native";
 const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
       marginBottom: 16,
       borderRadius: 10,
-      backgroundColor: theme.colors.action,
-      padding: 8,
-      paddingRight: 16,
+      backgroundColor: theme.colors.error,
       alignSelf: "center",
       width: "89%",
       shadowColor: "#000",
@@ -20,8 +15,15 @@ const getStyles = (theme: Theme) =>
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-
       elevation: 5,
+    },
+    content: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 8,
+      paddingRight: 16,
+      backgroundColor: theme.colors.action,
     },
     rowContainer: {
       flexDirection: "row",
@@ -39,6 +41,13 @@ const getStyles = (theme: Theme) =>
       letterSpacing: theme.font.body.medium.tracking,
       lineHeight: theme.font.body.medium.lineHeight,
       color: theme.colors.fontLight,
+    },
+    deleteButtonContainer: {
+      backgroundColor: "red",
+      width: 60,
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
     },
   });
 
