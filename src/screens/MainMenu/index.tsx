@@ -73,7 +73,7 @@ const MainMenu: React.FC = () => {
         <Button
           disabled={gameKey === undefined}
           label={strings.continueLastGame}
-          onPress={() => handleQrCodeScanned(`monopolyapp:gameid:${gameKey!}`)}
+          onPress={() => handleQrCodeScanned(`pixplayapp:gameid:${gameKey!}`)}
         />
       </View>
     </View>

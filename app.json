@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "monopix",
-    "slug": "monopix",
+    "name": "PixPlay",
+    "slug": "pixplay",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -22,11 +22,11 @@
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.blackholedev.monopix"
+      "package": "com.blackholedev.pixplay"
     },
     "extra": {
       "eas": {
-        "projectId": "fe599a23-4644-464c-b02b-85f1faa951d9"
+        "projectId": "5bf5d65b-24ee-48c0-afe8-d741365462e6"
       }
     }
   }

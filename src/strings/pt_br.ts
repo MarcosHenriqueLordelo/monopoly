@@ -1,8 +1,8 @@
 const pt_br: Strings = {
-  appName: "Monopix",
+  appName: "PixPlay",
   appIntro1: "Olá ",
   appIntro2:
-    " Estamos felizes em tê-lo(a) no Monopix App. Prepare-se para vivenciar a emoção de negociações, estratégias e vitórias no mundo imobiliário. Divirta-se!",
+    " Estamos felizes em tê-lo(a) no PixPlay App. Prepare-se para vivenciar a emoção de negociações, estratégias e vitórias no mundo imobiliário. Divirta-se!",
   continue: "Continuar",
   hello: "Olá, ",
   lobby: "Saguão",
@@ -11,7 +11,7 @@ const pt_br: Strings = {
   leaveLobby: "Sair do saguão",
   startGame: "Iniciar Jogo",
   qrCodeHint:
-    "Para entrar no lobby, escaneie o QR Code acima com o aplicativo do Monopoly. Junte-se aos jogadores e prepare-se para a diversão!",
+    "Para entrar no lobby, escaneie o QR Code acima com o aplicativo do PixPlay. Junte-se aos jogadores e prepare-se para a diversão!",
   balance: "Saldo",
   charge: "Cobrar",
   deposit: "Depositar",
@@ -45,9 +45,10 @@ const pt_br: Strings = {
   continueLastGame: "Continuar última partida",
   createGame: "Criar Partida",
   joinGame: "Entrar em partida",
-  welcome: "Bem-vindo ao Monopix App!",
+  welcome: "Bem-vindo ao PixPlay App!",
   whereToGo: "O que deseja fazer hoje?",
-  starterValueHelp:"Informe o valor inicial com que os jogadores começarão o jogo",
+  starterValueHelp:
+    "Informe o valor inicial com que os jogadores começarão o jogo",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",

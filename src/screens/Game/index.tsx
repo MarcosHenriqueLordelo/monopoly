@@ -156,7 +156,7 @@ const Game: React.FC = () => {
   });
 
   const handleQrCodeScanned = (code: string) => {
-    if (code.includes("monopolyapp") && code.includes("charge")) {
+    if (code.includes("pixplayapp") && code.includes("charge")) {
       setQrCodeData({
         receiver: { id: code.split(":")[2], name: code.split(":")[3] },
         value: parseFloat(code.split(":")[4]),

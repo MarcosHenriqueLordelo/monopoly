@@ -118,7 +118,7 @@ const Lobby: React.FC = () => {
     <ScrollView style={styles.container}>
       <View style={styles.buttonsView}>
         <QRCode
-          value={`monopolyapp:gameid:${game?.id}`}
+          value={`pixplayapp:gameid:${game?.id}`}
           size={175}
           backgroundColor={theme.colors.background}
           color={theme.colors.action}

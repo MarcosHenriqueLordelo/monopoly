@@ -27,7 +27,7 @@ const QrCodeModal: React.FC<PropTypes> = ({ open, onClose, qrCodeData }) => {
 
   const formatQrCodeString = useCallback(() => {
     if (!qrCodeData) return "";
-    return `monopolyapp:charge:${qrCodeData.receiver.id}:${qrCodeData.receiver.name}:${qrCodeData.value}`;
+    return `pixplayapp:charge:${qrCodeData.receiver.id}:${qrCodeData.receiver.name}:${qrCodeData.value}`;
   }, [qrCodeData]);
 
   const formatDescriptionString = useCallback(() => {
