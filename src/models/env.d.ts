@@ -8,4 +8,6 @@ declare module "@env" {
   export const MESSAGING_SENDER_ID_LOCAL: string;
   export const APP_ID_LOCAL: string;
   export const MEASUREMENT_ID_LOCAL: string;
+  export const ADMOB_ANDROID_APP_ID_LOCAL: string;
+  export const BANNER_ID_ANDROID_LOCAL: string;
 }

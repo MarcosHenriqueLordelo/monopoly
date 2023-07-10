@@ -1,14 +1,20 @@
-import React from "react";
-import { View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
-import useUi from "./contexts/ui/useUi";
+import useUi from './contexts/ui/useUi';
 
-import RootNav from "./navigators/RootNav";
+import RootNav from './navigators/RootNav';
 
-import SnackBar from "./components/SnackBar";
+import SnackBar from './components/SnackBar';
+
+import { BANNER_ID_ANDROID } from './utils/keys';
 
 const App: React.FC = () => {
   const { theme } = useUi();
@@ -20,7 +26,7 @@ const App: React.FC = () => {
       <View
         style={{
           height: insets.top,
-          width: "100%",
+          width: '100%',
           backgroundColor: theme.colors.action,
         }}
       />
@@ -28,8 +34,15 @@ const App: React.FC = () => {
       <View
         style={{
           height: insets.bottom,
-          width: "100%",
+          width: '100%',
           backgroundColor: theme.colors.action,
+        }}
+      />
+      <BannerAd
+        unitId={__DEV__ ? TestIds.BANNER : BANNER_ID_ANDROID}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
         }}
       />
       <SnackBar position="bottom" />

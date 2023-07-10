@@ -8,7 +8,9 @@ import {
   MESSAGING_SENDER_ID_LOCAL,
   APP_ID_LOCAL,
   MEASUREMENT_ID_LOCAL,
-} from "@env";
+  BANNER_ID_ANDROID_LOCAL,
+  ADMOB_ANDROID_APP_ID_LOCAL,
+} from '@env';
 
 export const TOKEN_KEY = process.env.TOKEN_KEY || TOKEN_KEY_LOCAL;
 
@@ -23,3 +25,7 @@ export const MESSAGING_SENDER_ID =
 export const APP_ID = process.env.APP_ID || APP_ID_LOCAL;
 export const MEASUREMENT_ID =
   process.env.MEASUREMENT_ID || MEASUREMENT_ID_LOCAL;
+export const BANNER_ID_ANDROID =
+  process.env.BANNER_ID_ANDROID || BANNER_ID_ANDROID_LOCAL;
+export const ADMOB_ANDROID_APP_ID =
+  process.env.ADMOB_ANDROID_APP_ID || ADMOB_ANDROID_APP_ID_LOCAL;

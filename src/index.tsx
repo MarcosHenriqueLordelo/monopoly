@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import 'expo-dev-client';
 
 import App from './App';
 import AppProvider from './AppProvider';
 
-const Index: React.FC = () => (
-  <AppProvider>
-    <App />
-  </AppProvider>
-);
+import mobileAds from 'react-native-google-mobile-ads';
+
+const Index: React.FC = () => {
+  useEffect(() => {
+    mobileAds().initialize();
+  }, []);
+
+  return (
+    <AppProvider>
+      <App />
+    </AppProvider>
+  );
+};
 
 export default Index;
