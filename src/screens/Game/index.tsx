@@ -15,6 +15,7 @@ import useUser from "../../contexts/user/useUser";
 import Loading from "../../components/Loading";
 import useUi from "../../contexts/ui/useUi";
 import useSnackbar from "../../contexts/snackbar/useSnackbar";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import DepositModal from "../../modals/DepositModal";
 import TransferModal from "../../modals/TransferModal";
@@ -32,6 +33,7 @@ const Game: React.FC = () => {
   const { game, deleteProperty } = useFirebase();
   const { user } = useUser();
   const { showSnackbar } = useSnackbar();
+  const navigation = useNavigation();
 
   const [player, setPlayer] = useState<Player>();
   const [transactions, setTransactions] = useState<Transactions>({});
@@ -88,6 +90,8 @@ const Game: React.FC = () => {
       setProperty(undefined);
     }
   }, [game, user]);
+
+  const handleGoBack = () => navigation.dispatch(StackActions.popToTop());
 
   const handleTransactions = (data: Transactions, ids: string[]): string[] => {
     const keys = Object.keys(data);
@@ -181,7 +185,7 @@ const Game: React.FC = () => {
         <Loading />
       ) : (
         <View style={styles.container}>
-          <Header />
+          <Header onGoBack={handleGoBack} />
           <View style={styles.ballanceContainer}>
             <Text style={styles.title}>{strings.balance}</Text>
             <Text style={styles.ballanceValue}>

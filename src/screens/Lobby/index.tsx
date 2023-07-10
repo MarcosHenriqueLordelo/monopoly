@@ -13,6 +13,7 @@ import getStyles from "./styles";
 import Loading from "../../components/Loading";
 import Button from "../../components/Button";
 import Spacer from "../../components/Spacer";
+import StartGameModal from "../../modals/StartGameModal";
 
 const Lobby: React.FC = () => {
   const { game, getPlayerData, leaveLobby, clearGame, startGame, gameKey } =
@@ -24,6 +25,7 @@ const Lobby: React.FC = () => {
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   const [lobbyData, setLobbyData] = useState<User[]>([]);
+  const [startGameModal, setStartGameModal] = useState(false);
 
   useEffect(() => {
     if (!game) return;
@@ -85,10 +87,17 @@ const Lobby: React.FC = () => {
     navigation.dispatch(StackActions.pop());
   };
 
-  const onStartGame = useCallback(() => {
-    if (!lobbyData) return;
-    startGame(lobbyData);
-  }, [lobbyData]);
+  const onStartGame = useCallback(
+    (startValue: number) => {
+      console.log("value", startValue);
+      console.log("lobby", lobbyData);
+
+      if (!lobbyData || lobbyData.length < 2) return;
+
+      startGame(lobbyData, startValue);
+    },
+    [lobbyData]
+  );
 
   if (loading) return <Loading />;
 
@@ -107,7 +116,6 @@ const Lobby: React.FC = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.lobbytitle}>{strings.lobby}</Text>
       <View style={styles.buttonsView}>
         <QRCode
           value={`monopolyapp:gameid:${game?.id}`}
@@ -127,10 +135,15 @@ const Lobby: React.FC = () => {
         <Button
           label={strings.startGame}
           disabled={game?.admin !== user?.id || lobbyData.length < 2}
-          onPress={onStartGame}
+          onPress={() => setStartGameModal(true)}
         />
       </View>
       <Spacer height={32} />
+      <StartGameModal
+        onClose={() => setStartGameModal(false)}
+        open={startGameModal}
+        onStartGame={(startValue) => onStartGame(startValue)}
+      />
     </ScrollView>
   );
 };

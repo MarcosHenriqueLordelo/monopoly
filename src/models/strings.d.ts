@@ -44,6 +44,7 @@ interface Strings {
   createGame: string;
   joinGame: string;
   continueLastGame: string;
+  starterValueHelp: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;

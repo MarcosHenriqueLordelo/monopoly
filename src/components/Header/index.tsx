@@ -7,7 +7,11 @@ import useUser from "../../contexts/user/useUser";
 import getStyles from "./styles";
 import IconButton from "../IconButton";
 
-const Header: React.FC = () => {
+interface PropTypes {
+  onGoBack?: () => void;
+}
+
+const Header: React.FC<PropTypes> = ({ onGoBack }) => {
   const { theme, strings, switchTheme } = useUi();
   const { user } = useUser();
 
@@ -35,8 +39,14 @@ const Header: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <View />
-        <IconButton name="palette" onPress={handleSwitchTheme} size={24} />
+        <View>
+          {onGoBack && (
+            <IconButton name="chevron-left" onPress={onGoBack} size={24} />
+          )}
+        </View>
+        <View>
+          <IconButton name="palette" onPress={handleSwitchTheme} size={24} />
+        </View>
       </View>
       <Text style={styles.userName}>
         {strings.hello}

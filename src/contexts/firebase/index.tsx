@@ -35,7 +35,7 @@ interface FirebaseContext {
   listenToGame: (gameId: string) => void;
   stopListening: () => void;
   clearGame: () => void;
-  startGame: (lobbyData: User[]) => void;
+  startGame: (lobbyData: User[], startValue: number) => void;
   makeTransaction: (
     payer: string | "bank",
     receiver: string | "bank",
@@ -230,12 +230,13 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
   const clearGame = () => setGame(undefined);
 
   const startGame = useCallback(
-    (lobbyData: User[]) => {
+    (lobbyData: User[], startValue: number) => {
       try {
         setLoading(true);
-        if (!game || !db || !user) return;
-        if (user.id !== game.admin) return;
-        if (game.lobby.length < 2) return;
+        if (!game || !db || !user || lobbyData.length < 1)
+          return setLoading(false);
+        if (user.id !== game.admin) return setLoading(false);
+        if (game.lobby.length < 2) return setLoading(false);
 
         const gameRef = ref(db, `Games/${game.id}`);
 
@@ -245,7 +246,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
         lobbyData.forEach((playerData) => {
           players[playerData.id] = {
             ...playerData,
-            money: 15000000,
+            money: startValue,
             properties: {},
             color: theme.colors.action,
           };
@@ -253,7 +254,7 @@ export const FirebaseProvider: React.FC<DefaultProps> = ({ children }) => {
           transactions[Crypto.randomUUID()] = {
             payer: "bank",
             receiver: playerData.id,
-            value: 15000000,
+            value: startValue,
             timestamp: moment().unix(),
           };
         });

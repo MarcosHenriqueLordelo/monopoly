@@ -47,6 +47,7 @@ const pt_br: Strings = {
   joinGame: "Entrar em partida",
   welcome: "Bem-vindo ao Monopix App!",
   whereToGo: "O que deseja fazer hoje?",
+  starterValueHelp:"Informe o valor inicial com que os jogadores começarão o jogo",
   //Errors
   retriveUserDataError:
     "Ocorreu um problema ao carregar informações do usuário",
