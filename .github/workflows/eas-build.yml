@@ -19,7 +19,7 @@ jobs:
       - name: Check package.json version
         run: |
           current_version=$(node -p "require('./package.json').version")
-          previous_version=$(git show HEAD^:package.json | grep version | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+          previous_version=$(git log -n 1 --pretty=format:%s | grep -oP "(?<=Bump version to )\d+\.\d+\.\d+")
           if [[ "$current_version" == "$previous_version" || $(echo "$current_version <= $previous_version" | bc -l) -eq 1 ]]; then
             echo "Version check failed. Stopping workflow."
             exit 1
