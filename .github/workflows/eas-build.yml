@@ -5,16 +5,11 @@ on:
     branches:
       - master
 jobs:
-  build:
-    name: Install and build
+  checkVersion:
+    name: Check package version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-    
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: npm
 
       - name: Check package.json version
         run: |
@@ -38,6 +33,17 @@ jobs:
           else
             echo "Version check passed. Continuing workflow."
           fi
+
+  build:
+    name: Install and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+    
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: npm
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
