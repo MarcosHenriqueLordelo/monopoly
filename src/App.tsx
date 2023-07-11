@@ -31,13 +31,6 @@ const App: React.FC = () => {
         }}
       />
       <RootNav />
-      <View
-        style={{
-          height: insets.bottom,
-          width: '100%',
-          backgroundColor: theme.colors.action,
-        }}
-      />
       <BannerAd
         unitId={__DEV__ ? TestIds.BANNER : BANNER_ID_ANDROID}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
@@ -46,6 +39,13 @@ const App: React.FC = () => {
         }}
       />
       <SnackBar position="bottom" />
+      <View
+        style={{
+          height: insets.bottom,
+          width: '100%',
+          backgroundColor: theme.colors.action,
+        }}
+      />
     </View>
   );
 };

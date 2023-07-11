@@ -1,5 +1,5 @@
 interface Theme {
-  name: string;
+  name: ThemeName;
   colors: {
     background: string;
     section: string;

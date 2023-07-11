@@ -1,15 +1,15 @@
-import React, { useMemo } from "react";
-import { View, Text, Animated } from "react-native";
-import { RectButton, Swipeable } from "react-native-gesture-handler";
-import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+import React, { useMemo } from 'react';
+import { View, Text } from 'react-native';
+import { RectButton, Swipeable } from 'react-native-gesture-handler';
+import MaterialIcon from '@expo/vector-icons/MaterialIcons';
 
-import getStyles from "./styles";
+import getStyles from './styles';
 
-import IconButton from "../IconButton";
-import Spacer from "../Spacer";
+import IconButton from '../IconButton';
+import Spacer from '../Spacer';
 
-import useUi from "../../contexts/ui/useUi";
-import useUser from "../../contexts/user/useUser";
+import useUi from '../../contexts/ui/useUi';
+import useUser from '../../contexts/user/useUser';
 
 interface PropTypes {
   property: Property;
@@ -30,17 +30,17 @@ const PropertyListItem: React.FC<PropTypes> = ({
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   const formatMortgage = (): string => {
-    const format = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    const format = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     }).format;
     return `${strings.mortgage}: ${format(property.mortgage)}`;
   };
 
   const formatRent = (): string => {
-    const format = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    const format = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     }).format;
     return `${strings.rent}: ${format(property.rent)}`;
   };

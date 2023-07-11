@@ -45,6 +45,14 @@ interface Strings {
   joinGame: string;
   continueLastGame: string;
   starterValueHelp: string;
+  options: string;
+  changeName: string;
+  changeColor: string;
+  shareApp: string;
+  howItWorks: string;
+  developerInfo: string;
+  shareText: string;
+  shareGameHelp: string;
   //Error Messages
   retriveUserDataError: string;
   saveUserDataError: string;

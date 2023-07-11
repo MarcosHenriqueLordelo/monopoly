@@ -1,23 +1,30 @@
-import React, { useMemo } from "react";
-import { TouchableOpacity, Text } from "react-native";
+import React, { useMemo } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+import { ViewStyle } from '../../../node_modules/react-native/Libraries/StyleSheet/StyleSheetTypes';
 
-import useUi from "../../contexts/ui/useUi";
-import getStyles from "./styles";
+import useUi from '../../contexts/ui/useUi';
+import getStyles from './styles';
 
 interface PropTypes {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  containerStyle?: ViewStyle;
 }
 
-const Button: React.FC<PropTypes> = ({ label, onPress, disabled }) => {
+const Button: React.FC<PropTypes> = ({
+  label,
+  onPress,
+  disabled,
+  containerStyle,
+}) => {
   const { theme } = useUi();
 
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={{ ...styles.container, ...containerStyle }}
       onPress={onPress}
       disabled={disabled}
     >

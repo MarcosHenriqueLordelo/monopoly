@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
-import { StackActions, useNavigation } from "@react-navigation/native";
-import QRCode from "react-native-qrcode-svg";
-import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { StackActions, useNavigation } from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
+import MaterialIcon from '@expo/vector-icons/MaterialIcons';
 
-import useFirebase from "../../contexts/firebase/useFirebase";
-import useUi from "../../contexts/ui/useUi";
-import useUser from "../../contexts/user/useUser";
+import useFirebase from '../../contexts/firebase/useFirebase';
+import useUi from '../../contexts/ui/useUi';
+import useUser from '../../contexts/user/useUser';
 
-import getStyles from "./styles";
+import getStyles from './styles';
 
-import Loading from "../../components/Loading";
-import Button from "../../components/Button";
-import Spacer from "../../components/Spacer";
-import StartGameModal from "../../modals/StartGameModal";
+import Loading from '../../components/Loading';
+import Button from '../../components/Button';
+import Spacer from '../../components/Spacer';
+import StartGameModal from '../../modals/StartGameModal';
 
 const Lobby: React.FC = () => {
   const { game, getPlayerData, leaveLobby, clearGame, startGame, gameKey } =
@@ -67,7 +67,7 @@ const Lobby: React.FC = () => {
     return lobbyData.map((player) => (
       <View
         key={player.id}
-        style={{ justifyContent: "space-between", ...styles.playerListItem }}
+        style={{ justifyContent: 'space-between', ...styles.playerListItem }}
       >
         <Text style={styles.playerItemLabel}>{player.name}</Text>
         {player.id === game?.admin && (
@@ -89,9 +89,6 @@ const Lobby: React.FC = () => {
 
   const onStartGame = useCallback(
     (startValue: number) => {
-      console.log("value", startValue);
-      console.log("lobby", lobbyData);
-
       if (!lobbyData || lobbyData.length < 2) return;
 
       startGame(lobbyData, startValue);
@@ -103,7 +100,7 @@ const Lobby: React.FC = () => {
 
   if (!loading && !gameKey)
     return (
-      <View style={{ ...styles.container, justifyContent: "center" }}>
+      <View style={{ ...styles.container, justifyContent: 'center' }}>
         <Text style={styles.qrCodeHint}>{strings.opsGameNotFound}</Text>
         <View style={styles.buttonsView}>
           <Button
