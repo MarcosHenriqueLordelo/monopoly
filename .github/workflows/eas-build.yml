@@ -11,36 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check package.json version
-        id: package-version
-        run: |
-          current_version=$(node -p "require('./package.json').version")
-          previous_version=$(git log -n 1 --pretty=format:%s | grep -oP "(?<=Bump version to )\d+\.\d+\.\d+")
-          echo "$previous_version"
-          if [[ "$current_version" == "$previous_version" || $(echo "$current_version <= $previous_version" | bc -l) -eq 1 ]]; then
-            echo "Version check failed. Stopping workflow."
-            exit 1
-          else
-            echo "Version check passed. Continuing workflow."
-          fi
-
-      - name: Check app.json expo version
-        id: expo-version
-        run: |
-          current_version=$(node -p "require('./app.json').expo.version")
-          previous_version=$(git log -n 1 --pretty=format:%s | grep -oP "(?<=Bump version to )\d+\.\d+\.\d+")
-          if [[ "$current_version" == "$previous_version" || $(echo "$current_version <= $previous_version" | bc -l) -eq 1 ]]; then
-            echo "Version check failed. Stopping workflow."
-            exit 2
-          else
-            echo "Version check passed. Continuing workflow."
-          fi
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          BRANCH_PREFIX: master/
 
   build:
     name: Install and build
     runs-on: ubuntu-latest
     needs: checkVersion
-    if: ${{ needs.checkVersion.outputs.package-version == 'Version check passed. Continuing workflow.' && needs.checkVersion.outputs.expo-version == 'Version check passed. Continuing workflow.' }}
     steps:
       - uses: actions/checkout@v3
     
