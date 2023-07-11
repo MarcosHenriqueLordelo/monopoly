@@ -6,6 +6,8 @@ import AppProvider from './AppProvider';
 
 import mobileAds from 'react-native-google-mobile-ads';
 
+//teste versão
+
 const Index: React.FC = () => {
   useEffect(() => {
     mobileAds().initialize();
