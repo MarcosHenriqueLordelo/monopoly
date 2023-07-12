@@ -8,6 +8,7 @@ import getStyles from './styles';
 import useUi from '../../contexts/ui/useUi';
 import IconButton from '../../components/IconButton';
 import Button from '../../components/Button';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 interface PropTypes {
   open?: boolean;
@@ -25,6 +26,7 @@ const OptionsModal: React.FC<PropTypes> = ({
   inGame,
 }) => {
   const { theme, strings } = useUi();
+  const navigation = useNavigation();
 
   const styles = useMemo(() => getStyles(theme), [theme]);
 
@@ -60,7 +62,10 @@ const OptionsModal: React.FC<PropTypes> = ({
         <Button
           containerStyle={styles.buttonsContainer}
           label={strings.howItWorks}
-          onPress={() => console.log('teste')}
+          onPress={() => {
+            navigation.dispatch(StackActions.push('HowToUse'));
+            onClose();
+          }}
         />
         <Button
           containerStyle={styles.buttonsContainer}

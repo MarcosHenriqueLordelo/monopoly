@@ -8,7 +8,7 @@ import IconButton from '../IconButton';
 
 interface PropTypes {
   leftAction?: Action;
-  title: string;
+  title?: string;
   rightActions?: Action[];
   type?: 'small' | 'medium';
 }
@@ -26,8 +26,9 @@ const AppBar: React.FC<PropTypes> = ({
   const renderRightActions = useMemo(
     () =>
       rightActions &&
-      rightActions.map((action) => (
+      rightActions.map((action, index) => (
         <IconButton
+          key={index}
           name={action.name}
           onPress={action.action}
           size={24}

@@ -65,7 +65,7 @@ const getStyles = (theme: Theme) =>
       height: 1,
       width: '100%',
       marginTop: 16,
-      marginBottom: 32,
+      marginBottom: 20,
       backgroundColor: theme.colors.fontDark,
     },
     rowView: {

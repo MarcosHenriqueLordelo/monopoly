@@ -58,6 +58,26 @@ const pt_br: Strings = {
   shareText: 'Baixe o PixPlay para começar a se divertir com seus amigos!',
   shareGameHelp:
     'Caso algum participante tenha perdido a conexão com o jogo, ele pode voltar ao escanear o QR code acima',
+  fastCharge: 'Cobrança Rápida',
+  newItem: 'Novo Item',
+  value: 'Valor',
+  editItem: 'Editar Item',
+  //how to use
+  usesRealMoney: 'O dinheiro utilizado é real?',
+  usesRealMoneyRes:
+    'Não, o aplicativo PixPay não utiliza dinheiro real. Todo o dinheiro presente no aplicativo é fictício e serve exclusivamente para os propósitos do jogo. O PixPay é projetado para substituir as cédulas em jogos de tabuleiro, permitindo que os jogadores realizem transferências dentro do contexto do jogo, sem qualquer valor monetário real aplicado a elas. Portanto, você pode desfrutar do jogo de tabuleiro sem se preocupar com o uso de dinheiro real.',
+  howToCreateGame: 'Como criar uma partida?',
+  howToCreateGameRes:
+    'Para criar uma partida, basta apertar o botão "Criar Partida" na tela principal do aplicativo. Você será redirecionado(a) para o lobby do jogo, onde será exibido um código QR que seus amigos poderão escanear para se juntar à partida. Ao iniciar a partida, uma caixa de diálogo aparecerá, solicitando que você informe o valor inicial de dinheiro com o qual os jogadores começarão a partida. Por padrão, esse valor é definido como 15 milhões. No entanto, você pode personalizá-lo de acordo com as preferências do grupo. Lembre-se de que é necessário ter pelo menos 2 jogadores para iniciar a partida, e apenas o líder do lobby terá a permissão para iniciar quando estiverem prontos.',
+  howToJoinGame: 'Como entrar em uma partida?',
+  howToJoinGameRes:
+    'Para entrar em uma partida, basta apertar o botão "Entrar em uma Partida" na tela principal do aplicativo. Ao fazer isso, a câmera será aberta, e você deverá escanear o QR code fornecido pelo líder da partida. Após escanear o QR code, você será direcionado(a) para a sala da partida e poderá aguardar o líder iniciar o jogo.',
+  canIJoinAStartedGame: 'Posso me juntar a um jogo em andamento?',
+  canIJoinAStartedGameRes:
+    'Após o líder iniciar o jogo, não é mais possível se juntar àquela partida em andamento. É importante lembrar que o processo de entrada em uma partida deve ser concluído antes que o líder dê início ao jogo. Portanto, certifique-se de se juntar a uma partida antes que o líder inicie, escaneando o QR code fornecido pelo líder durante a fase de preparação. Dessa forma, você poderá participar do jogo desde o início e aproveitar a experiência completa com os demais jogadores.',
+  canIRejoinTheGame: 'Perdi conexão, posso voltar ao jogo?',
+  canIRejoinTheGameRes:
+    'Sim, se você perdeu a conexão durante o jogo, ainda é possível voltar. Na tela do jogo, você encontrará um botão no canto superior direito que abre um QR code. Basta escanear esse QR code utilizando o seu dispositivo para se reconectar à partida em andamento. Ao fazer isso, você será capaz de retomar a sua posição no jogo e continuar jogando com os outros participantes. Certifique-se de ter uma conexão estável à internet para evitar interrupções durante o jogo.',
   //Errors
   retriveUserDataError:
     'Ocorreu um problema ao carregar informações do usuário',

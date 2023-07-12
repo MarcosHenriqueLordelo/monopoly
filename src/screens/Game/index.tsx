@@ -197,7 +197,7 @@ const Game: React.FC = () => {
           <AppBar
             title={`${strings.hello} ${user?.name}!`}
             rightActions={[
-              { name: 'share', action: () => setShareGameModal(true) },
+              { name: 'qr-code', action: () => setShareGameModal(true) },
               { name: 'settings', action: () => setOptionsModal(true) },
             ]}
             leftAction={{
@@ -291,7 +291,7 @@ const Game: React.FC = () => {
             </TouchableOpacity>
             <View style={styles.divider} />
             <View style={styles.rowView}>
-              <Text style={styles.title}>{strings.myProperties}</Text>
+              <Text style={styles.title}>{strings.fastCharge}</Text>
               <IconButton
                 name="add"
                 onPress={() => setCreatePropertyModal(true)}

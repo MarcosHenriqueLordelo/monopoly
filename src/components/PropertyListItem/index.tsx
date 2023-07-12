@@ -42,7 +42,7 @@ const PropertyListItem: React.FC<PropTypes> = ({
       style: 'currency',
       currency: 'BRL',
     }).format;
-    return `${strings.rent}: ${format(property.rent)}`;
+    return `${format(property.rent)}`;
   };
 
   const renderRightAction = () => {
@@ -62,7 +62,7 @@ const PropertyListItem: React.FC<PropTypes> = ({
       <View style={styles.content}>
         <View>
           <Text style={styles.nameLabel}>{property.name}</Text>
-          <Text style={styles.infoLabel}>{formatMortgage()}</Text>
+          {/* <Text style={styles.infoLabel}>{formatMortgage()}</Text> */}
           <Text style={styles.infoLabel}>{formatRent()}</Text>
         </View>
         <View style={styles.rowContainer}>
