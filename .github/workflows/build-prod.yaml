@@ -1,6 +1,5 @@
 name: Build Prod
 on:
-  workflow_dispatch:
   push:
     branches:
       - master
