@@ -9,7 +9,6 @@ const getStyles = (theme: Theme) =>
       padding: 16,
     },
     appLogo: {
-      backgroundColor: theme.colors.action,
       width: 100,
       height: 100,
       borderRadius: 100,
