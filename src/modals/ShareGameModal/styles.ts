@@ -3,38 +3,33 @@ import { StyleSheet } from "react-native";
 const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.background,
-      flex: 1,
-      alignItems: "center",
+      width: "75%",
       padding: 16,
+      backgroundColor: theme.colors.action,
+      borderRadius: 10,
+      alignItems: "center",
     },
-    appLogo: {
-      width: 100,
-      height: 100,
-      borderRadius: 100,
-      marginBottom: 16,
-      marginTop: 32,
+    headerView: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
-    appName: {
+    title: {
       fontSize: theme.font.title.large.size,
       fontWeight: theme.font.title.large.weight,
       letterSpacing: theme.font.title.large.tracking,
       lineHeight: theme.font.title.large.lineHeight,
-      textTransform: "uppercase",
-      color: theme.colors.fontDark,
+      color: theme.colors.fontLight,
+      marginBottom: 16,
     },
-    introduction: {
+    description: {
       fontSize: theme.font.body.medium.size,
       fontWeight: theme.font.body.medium.weight,
       letterSpacing: theme.font.body.medium.tracking,
       lineHeight: theme.font.body.medium.lineHeight,
-      color: theme.colors.fontDark,
+      color: theme.colors.fontLight,
       textAlign: "center",
-      marginTop: 32,
-    },
-    userName: {
-      color: theme.colors.action,
-      textTransform: "uppercase",
+      marginVertical: 16,
     },
   });
 

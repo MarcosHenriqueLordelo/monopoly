@@ -1,21 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { View, Text, TextInput } from "react-native";
-import { TextInputMask } from "react-native-masked-text";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 
-import ModalContainer from "../ModalContainer";
+import ModalContainer from '../ModalContainer';
 
-import getStyles from "./styles";
+import getStyles from './styles';
 
-import SelectableChip from "../../components/SelectableChip";
-import Spacer from "../../components/Spacer";
-import Button from "../../components/Button";
+import SelectableChip from '../../components/SelectableChip';
+import Spacer from '../../components/Spacer';
+import Button from '../../components/Button';
 
-import useUi from "../../contexts/ui/useUi";
-import useSnackbar from "../../contexts/snackbar/useSnackbar";
-import useUser from "../../contexts/user/useUser";
-import useFirebase from "../../contexts/firebase/useFirebase";
-import Loading from "../../components/Loading";
-import IconButton from "../../components/IconButton";
+import useUi from '../../contexts/ui/useUi';
+import useSnackbar from '../../contexts/snackbar/useSnackbar';
+import useUser from '../../contexts/user/useUser';
+import useFirebase from '../../contexts/firebase/useFirebase';
+import Loading from '../../components/Loading';
+import IconButton from '../../components/IconButton';
 
 interface PropTypes {
   open?: boolean;
@@ -23,7 +23,7 @@ interface PropTypes {
   property?: Property;
 }
 
-type Multiplier = "M" | "K" | undefined;
+type Multiplier = 'M' | 'K' | undefined;
 
 const EditPropertyModal: React.FC<PropTypes> = ({
   open,
@@ -35,12 +35,12 @@ const EditPropertyModal: React.FC<PropTypes> = ({
   const { user } = useUser();
   const { updateProperty, deleteProperty } = useFirebase();
 
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>('');
 
-  const [rent, setRent] = useState<string>("");
+  const [rent, setRent] = useState<string>('');
   const [rentMult, setRentMult] = useState<Multiplier>();
 
-  const [mortgage, setMortgage] = useState<string>("");
+  const [mortgage, setMortgage] = useState<string>('');
   const [mortgageMult, setMortgageMult] = useState<Multiplier>();
 
   const rentInputRef = useRef<any>(null);
@@ -52,21 +52,21 @@ const EditPropertyModal: React.FC<PropTypes> = ({
     if (!property) return;
     setName(property.name);
 
-    if (property.rent % 1000000 > 1) {
-      setRentMult("M");
-      setRent(`${property.rent / 1000000}`);
-    } else if (property.rent % 1000 > 1) {
-      setRentMult("K");
+    if (property.rent % 1000 > 1) {
+      setRentMult('K');
       setRent(`${property.rent / 1000}`);
+    } else if (property.rent % 1000000 > 1) {
+      setRentMult('M');
+      setRent(`${property.rent / 1000000}`);
     } else {
       setRentMult(undefined);
       setRent(`${property.rent}`);
     }
     if (property.mortgage % 1000 > 1) {
-      setMortgageMult("K");
+      setMortgageMult('K');
       setMortgage(`${property.mortgage / 1000}`);
     } else if (property.mortgage % 1000000 > 1) {
-      setMortgageMult("M");
+      setMortgageMult('M');
       setMortgage(`${property.mortgage / 1000000}`);
     } else {
       setMortgageMult(undefined);
@@ -75,15 +75,15 @@ const EditPropertyModal: React.FC<PropTypes> = ({
   }, [property]);
 
   const handleMultiplierChanged = (
-    key: "M" | "K",
-    field: "mortgage" | "rent"
+    key: 'M' | 'K',
+    field: 'mortgage' | 'rent'
   ) => {
     switch (field) {
-      case "mortgage":
+      case 'mortgage':
         if (mortgageMult === key) setMortgageMult(undefined);
         else setMortgageMult(key);
         break;
-      case "rent":
+      case 'rent':
         if (rentMult === key) setRentMult(undefined);
         else setRentMult(key);
         break;
@@ -105,7 +105,7 @@ const EditPropertyModal: React.FC<PropTypes> = ({
     if (name.trim().length === 0)
       return showSnackbar(strings.nameCantBeUndefined, theme.colors.error);
     if (rentValue === 0)
-      return showSnackbar(strings.rentCantBeZero, theme.colors.error);
+      return showSnackbar(strings.chargeValueCantBeZero, theme.colors.error);
     if (mortgageValue === 0)
       return showSnackbar(strings.mortgageCantBeZero, theme.colors.error);
 
@@ -123,8 +123,8 @@ const EditPropertyModal: React.FC<PropTypes> = ({
   };
 
   const handleMultiplier = (multiplier: Multiplier, value: number) => {
-    if (multiplier === "M") return value * 1000000;
-    if (multiplier === "K") return value * 1000;
+    if (multiplier === 'M') return value * 1000000;
+    if (multiplier === 'K') return value * 1000;
     return value;
   };
 
@@ -138,12 +138,8 @@ const EditPropertyModal: React.FC<PropTypes> = ({
     <ModalContainer open={open} onClose={onClose}>
       <View style={styles.container}>
         <View style={styles.headerView}>
-          <Text style={styles.title}>{strings.edit}</Text>
-          <IconButton
-            name="close"
-            onPress={onClose}
-            size={24}
-          />
+          <Text style={styles.title}>{strings.editItem}</Text>
+          <IconButton name="close" onPress={onClose} size={24} />
         </View>
         <TextInput
           style={styles.nameInput}
@@ -164,26 +160,26 @@ const EditPropertyModal: React.FC<PropTypes> = ({
             ref={rentInputRef}
             options={{
               precision: 2,
-              separator: ",",
-              delimiter: ".",
-              unit: "",
-              suffixUnit: "",
+              separator: ',',
+              delimiter: '.',
+              unit: '',
+              suffixUnit: '',
             }}
           />
           <Spacer width={8} />
           <SelectableChip
             label="M"
-            selected={rentMult === "M"}
-            onPress={() => handleMultiplierChanged("M", "rent")}
+            selected={rentMult === 'M'}
+            onPress={() => handleMultiplierChanged('M', 'rent')}
           />
           <Spacer width={8} />
           <SelectableChip
             label="K"
-            selected={rentMult === "K"}
-            onPress={() => handleMultiplierChanged("K", "rent")}
+            selected={rentMult === 'K'}
+            onPress={() => handleMultiplierChanged('K', 'rent')}
           />
         </View>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInputMask
             style={styles.input}
             type="money"
@@ -194,25 +190,25 @@ const EditPropertyModal: React.FC<PropTypes> = ({
             ref={mortgageInputRef}
             options={{
               precision: 2,
-              separator: ",",
-              delimiter: ".",
-              unit: "",
-              suffixUnit: "",
+              separator: ',',
+              delimiter: '.',
+              unit: '',
+              suffixUnit: '',
             }}
           />
           <Spacer width={8} />
           <SelectableChip
             label="M"
-            selected={mortgageMult === "M"}
-            onPress={() => handleMultiplierChanged("M", "mortgage")}
+            selected={mortgageMult === 'M'}
+            onPress={() => handleMultiplierChanged('M', 'mortgage')}
           />
           <Spacer width={8} />
           <SelectableChip
             label="K"
-            selected={mortgageMult === "K"}
-            onPress={() => handleMultiplierChanged("K", "mortgage")}
+            selected={mortgageMult === 'K'}
+            onPress={() => handleMultiplierChanged('K', 'mortgage')}
           />
-        </View>
+        </View> */}
         <View style={styles.headerView}>
           <Button label={strings.remove} onPress={handleDelete} />
           <Button label={strings.confirm} onPress={handleUpdateProperty} />

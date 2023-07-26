@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      width: "75%",
+      width: '75%',
       padding: 16,
       backgroundColor: theme.colors.action,
       borderRadius: 10,
     },
     headerView: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     title: {
       fontSize: theme.font.title.large.size,
@@ -31,8 +31,9 @@ const getStyles = (theme: Theme) =>
       backgroundColor: theme.colors.background,
       borderRadius: 6,
       marginTop: 16,
-      alignItems: "center",
-      textAlign: "center",
+      alignItems: 'center',
+      textAlign: 'center',
+      textTransform: 'capitalize',
     },
     input: {
       color: theme.colors.fontDark,
@@ -44,18 +45,18 @@ const getStyles = (theme: Theme) =>
       lineHeight: theme.font.body.large.lineHeight,
       backgroundColor: theme.colors.background,
       flex: 1,
-      textAlign: "center",
+      textAlign: 'center',
       borderRadius: 6,
     },
     inputContainer: {
-      flexDirection: "row",
+      flexDirection: 'row',
       marginBottom: 16,
-      alignItems: "center",
+      alignItems: 'center',
     },
     loadingView: {
-      position: "absolute",
-      width: "100%",
-      height: "100%",
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
     },
   });
 

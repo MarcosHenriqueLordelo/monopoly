@@ -1,7 +1,7 @@
 const light: Theme = {
     name: "purple",
     colors: {
-      background: "#CDF0EA",
+      background: "#F2F2F2",
       section: "#F9F9F9",
       fontDark: "#272324",
       fontLight: "#FFFFFF",

@@ -57,7 +57,7 @@ const SnackBar: React.FC<PropTypes> = ({ position }) => {
         {
           [position]: animatedValue.current.interpolate({
             inputRange: [0, 1],
-            outputRange: [-300, 40],
+            outputRange: [-300, 30],
           }),
         },
       ]}

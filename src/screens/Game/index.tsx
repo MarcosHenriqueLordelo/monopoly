@@ -1,32 +1,36 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import MaterialIcon from "@expo/vector-icons/MaterialIcons";
-import moment from "moment";
+import React, { useEffect, useMemo, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import MaterialIcon from '@expo/vector-icons/MaterialIcons';
+import moment from 'moment';
 
-import getStyles from "./styles";
+import getStyles from './styles';
 
-import Header from "../../components/Header";
-import IconButton from "../../components/IconButton";
-import Spacer from "../../components/Spacer";
-import QrCodeScanner from "../../components/QrCodeScanner";
+import IconButton from '../../components/IconButton';
+import Spacer from '../../components/Spacer';
+import QrCodeScanner from '../../components/QrCodeScanner';
+import PropertyListItem from '../../components/PropertyListItem';
+import AppBar from '../../components/AppBar';
 
-import useFirebase from "../../contexts/firebase/useFirebase";
-import useUser from "../../contexts/user/useUser";
-import Loading from "../../components/Loading";
-import useUi from "../../contexts/ui/useUi";
-import useSnackbar from "../../contexts/snackbar/useSnackbar";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import useFirebase from '../../contexts/firebase/useFirebase';
+import useUser from '../../contexts/user/useUser';
+import Loading from '../../components/Loading';
+import useUi from '../../contexts/ui/useUi';
+import useSnackbar from '../../contexts/snackbar/useSnackbar';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
-import DepositModal from "../../modals/DepositModal";
-import TransferModal from "../../modals/TransferModal";
-import ChargeModal from "../../modals/ChargeModal";
-import QrCodeModal from "../../modals/QrCodeModal";
-import PaymentModal from "../../modals/PaymentModal";
-import ExtractModal from "../../modals/ExtractModal";
-import ScoreboardModal from "../../modals/ScoreboardModal";
-import CreatePropertyModal from "../../modals/CreatePropertyModal";
-import PropertyListItem from "../../components/PropertyListItem";
-import EditPropertyModal from "../../modals/EditProperty";
+import DepositModal from '../../modals/DepositModal';
+import TransferModal from '../../modals/TransferModal';
+import ChargeModal from '../../modals/ChargeModal';
+import QrCodeModal from '../../modals/QrCodeModal';
+import PaymentModal from '../../modals/PaymentModal';
+import ExtractModal from '../../modals/ExtractModal';
+import ScoreboardModal from '../../modals/ScoreboardModal';
+import CreatePropertyModal from '../../modals/CreatePropertyModal';
+import EditPropertyModal from '../../modals/EditProperty';
+import OptionsModal from '../../modals/OptionsModal';
+import ChangeColorModal from '../../modals/ChangeColorModal';
+import ChangeNameModal from '../../modals/ChangeNameModal';
+import ShareGameModal from '../../modals/ShareGameModal';
 
 const Game: React.FC = () => {
   const { theme, strings } = useUi();
@@ -54,6 +58,11 @@ const Game: React.FC = () => {
   const [scoreboardModal, setScoreboardModal] = useState(false);
   const [createPropertyModal, setCreatePropertyModal] = useState(false);
   const [editPropertyModal, setEditPropertyModal] = useState(false);
+  const [optionsModal, setOptionsModal] = useState(false);
+  const [changeColorModal, setChangeColorModal] = useState(false);
+  const [changeNameModal, setChangeNameModal] = useState(false);
+  const [shareGameModal, setShareGameModal] = useState(false);
+
   const [scanner, setScanner] = useState(false);
 
   const styles = useMemo(() => getStyles(theme), [theme]);
@@ -97,9 +106,9 @@ const Game: React.FC = () => {
     const keys = Object.keys(data);
     const aux = ids;
 
-    const format = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    const format = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     }).format;
 
     keys.forEach((key) => {
@@ -150,16 +159,16 @@ const Game: React.FC = () => {
     return propertyAux;
   };
 
-  const formater = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
+  const formater = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
   });
 
   const handleQrCodeScanned = (code: string) => {
-    if (code.includes("pixplayapp") && code.includes("charge")) {
+    if (code.includes('pixplayapp') && code.includes('charge')) {
       setQrCodeData({
-        receiver: { id: code.split(":")[2], name: code.split(":")[3] },
-        value: parseFloat(code.split(":")[4]),
+        receiver: { id: code.split(':')[2], name: code.split(':')[3] },
+        value: parseFloat(code.split(':')[4]),
       });
       setPaymentModal(true);
     } else {
@@ -185,7 +194,18 @@ const Game: React.FC = () => {
         <Loading />
       ) : (
         <View style={styles.container}>
-          <Header onGoBack={handleGoBack} />
+          <AppBar
+            title={`${strings.hello} ${user?.name}!`}
+            rightActions={[
+              { name: 'qr-code', action: () => setShareGameModal(true) },
+              { name: 'settings', action: () => setOptionsModal(true) },
+            ]}
+            leftAction={{
+              name: 'arrow-back',
+              action: handleGoBack,
+            }}
+            type="medium"
+          />
           <View style={styles.ballanceContainer}>
             <Text style={styles.title}>{strings.balance}</Text>
             <Text style={styles.ballanceValue}>
@@ -271,7 +291,7 @@ const Game: React.FC = () => {
             </TouchableOpacity>
             <View style={styles.divider} />
             <View style={styles.rowView}>
-              <Text style={styles.title}>{strings.myProperties}</Text>
+              <Text style={styles.title}>{strings.fastCharge}</Text>
               <IconButton
                 name="add"
                 onPress={() => setCreatePropertyModal(true)}
@@ -344,6 +364,38 @@ const Game: React.FC = () => {
         onClose={() => setEditPropertyModal(false)}
         open={editPropertyModal}
         property={property}
+      />
+      <OptionsModal
+        inGame
+        onClose={() => setOptionsModal(false)}
+        open={optionsModal}
+        onChangeColor={() => {
+          setChangeColorModal(true);
+          setOptionsModal(false);
+        }}
+        onChangeName={() => {
+          setChangeNameModal(true);
+          setOptionsModal(false);
+        }}
+      />
+      <ChangeColorModal
+        onClose={() => {
+          setChangeColorModal(false);
+          setOptionsModal(true);
+        }}
+        open={changeColorModal}
+      />
+      <ChangeNameModal
+        onClose={() => {
+          setChangeNameModal(false);
+          setOptionsModal(true);
+        }}
+        open={changeNameModal}
+      />
+      <ShareGameModal
+        gameId={game!.id}
+        onClose={() => setShareGameModal(false)}
+        open={shareGameModal}
       />
     </View>
   );

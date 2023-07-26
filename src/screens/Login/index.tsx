@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import * as Crypto from "expo-crypto";
 
 import useUi from "../../contexts/ui/useUi";
@@ -11,6 +11,8 @@ import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 import Spacer from "../../components/Spacer";
 
+import appIcon from '../../assets/adaptive-icon.png'
+
 const Login: React.FC = () => {
   const { user, saveUserInCache } = useUser();
   const { theme, strings } = useUi();
@@ -19,7 +21,7 @@ const Login: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [uid, setUid] = useState("");
   const [error, setError] = useState<string>();
-  
+
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const Login: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.appLogo} />
+      <Image source={appIcon} style={styles.appLogo} />
       <Text style={styles.appName}>{strings.appName}</Text>
       <Text style={styles.introduction}>
         {strings.appIntro1}

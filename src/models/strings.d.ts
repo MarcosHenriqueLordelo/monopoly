@@ -45,7 +45,31 @@ interface Strings {
   joinGame: string;
   continueLastGame: string;
   starterValueHelp: string;
+  options: string;
+  changeName: string;
+  changeColor: string;
+  shareApp: string;
+  howItWorks: string;
+  developerInfo: string;
+  shareText: string;
+  shareGameHelp: string;
+  fastCharge: string;
+  newItem: string;
+  value: string;
+  editItem: string;
+  //how to use
+  usesRealMoney: string;
+  usesRealMoneyRes: string;
+  howToCreateGame: string;
+  howToCreateGameRes: string;
+  howToJoinGame: string;
+  howToJoinGameRes: string;
+  canIJoinAStartedGame: string;
+  canIJoinAStartedGameRes: string;
+  canIRejoinTheGame: string;
+  canIRejoinTheGameRes: string;
   //Error Messages
+  chargeValueCantBeZero: string;
   retriveUserDataError: string;
   saveUserDataError: string;
   fieldMustBeFilled: string;

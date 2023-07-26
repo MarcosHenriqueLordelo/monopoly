@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const getStyles = (theme: Theme) =>
   StyleSheet.create({
@@ -26,12 +26,12 @@ const getStyles = (theme: Theme) =>
       marginTop: 16,
     },
     buttonsView: {
-      flexDirection: "row",
+      flexDirection: 'row',
       marginBottom: 32,
       paddingLeft: 16,
     },
     buttonItem: {
-      alignItems: "center",
+      alignItems: 'center',
       marginRight: 16,
     },
     buttonContainer: {
@@ -46,12 +46,12 @@ const getStyles = (theme: Theme) =>
     },
     scoreboardContainer: {
       borderRadius: 10,
-      width: "89%",
+      width: '89%',
       backgroundColor: theme.colors.action,
-      flexDirection: "row",
+      flexDirection: 'row',
       paddingVertical: 14,
       paddingHorizontal: 16,
-      alignSelf: "center",
+      alignSelf: 'center',
     },
     scoreboardLabel: {
       fontSize: theme.font.title.large.size,
@@ -63,19 +63,19 @@ const getStyles = (theme: Theme) =>
     },
     divider: {
       height: 1,
-      width: "100%",
+      width: '100%',
       marginTop: 16,
-      marginBottom: 32,
+      marginBottom: 20,
       backgroundColor: theme.colors.fontDark,
     },
     rowView: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginBottom: 32,
     },
     ballanceContainer: {
-      shadowColor: "#000",
+      shadowColor: '#000',
       shadowOffset: {
         width: 0,
         height: 2,
@@ -84,12 +84,12 @@ const getStyles = (theme: Theme) =>
       shadowRadius: 3.84,
 
       elevation: 5,
-      alignSelf: "center",
-      width: "89%",
+      alignSelf: 'center',
+      width: '89%',
       backgroundColor: theme.colors.section,
       height: 150,
       borderRadius: 10,
-      marginTop: -32,
+      marginTop: -20,
       padding: 16,
     },
   });
