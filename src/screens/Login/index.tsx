@@ -11,7 +11,7 @@ import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 import Spacer from "../../components/Spacer";
 
-import appIcon from '../../assets/adaptive-icon.png'
+import appIcon from '../../assets/icon.png'
 
 const Login: React.FC = () => {
   const { user, saveUserInCache } = useUser();
@@ -59,7 +59,6 @@ const Login: React.FC = () => {
   return (
     <View style={styles.container}>
       <Image source={appIcon} style={styles.appLogo} />
-      <Text style={styles.appName}>{strings.appName}</Text>
       <Text style={styles.introduction}>
         {strings.appIntro1}
         <Text style={styles.userName}>{userName}!</Text>
