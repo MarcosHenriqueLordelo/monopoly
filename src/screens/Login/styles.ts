@@ -9,9 +9,8 @@ const getStyles = (theme: Theme) =>
       padding: 16,
     },
     appLogo: {
-      width: 100,
-      height: 100,
-      borderRadius: 100,
+      width: 140,
+      height: 140,
       marginBottom: 16,
       marginTop: 32,
     },
