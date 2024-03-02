@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import MaterialIcon from '@expo/vector-icons/MaterialIcons';
 import moment from 'moment';
 
@@ -180,6 +186,21 @@ const Game: React.FC = () => {
     deleteProperty(propertyData);
   };
 
+  const renderPropertyItem = ({ item: property }: { item: Property }) => (
+    <PropertyListItem
+      onEdit={() => {
+        setProperty(property);
+        setEditPropertyModal(true);
+      }}
+      onQrCode={(data) => {
+        setQrCodeData(data);
+        setQrCodeModal(true);
+      }}
+      property={property}
+      onDelete={() => onDeleteProperty(property)}
+    />
+  );
+
   if (scanner)
     return (
       <QrCodeScanner
@@ -300,22 +321,11 @@ const Game: React.FC = () => {
                 style={{ marginRight: 16 }}
               />
             </View>
-
-            {properties.map((property, index) => (
-              <PropertyListItem
-                onEdit={() => {
-                  setProperty(property);
-                  setEditPropertyModal(true);
-                }}
-                onQrCode={(data) => {
-                  setQrCodeData(data);
-                  setQrCodeModal(true);
-                }}
-                property={property}
-                key={`${property.name}${index}`}
-                onDelete={() => onDeleteProperty(property)}
-              />
-            ))}
+            <FlatList
+              renderItem={renderPropertyItem}
+              keyExtractor={(property) => property.id}
+              data={properties}
+            />
             <Spacer height={32} />
           </ScrollView>
         </View>

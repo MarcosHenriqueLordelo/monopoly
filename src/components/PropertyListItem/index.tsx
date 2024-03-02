@@ -58,6 +58,7 @@ const PropertyListItem: React.FC<PropTypes> = ({
       renderRightActions={renderRightAction}
       containerStyle={styles.container}
       overshootRight={false}
+      overshootLeft={false}
     >
       <View style={styles.content}>
         <View>
